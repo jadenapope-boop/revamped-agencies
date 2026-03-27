@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Overview | Revamped Agencies</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #0a0a0a;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ===================== NAV ===================== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 70px;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(147,51,234,0.3);
+}
+.nav-logo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+.nav-logo span { color: #a855f7; }
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: #a855f7; }
+.nav-btn {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #7c3aed;
+  padding: 10px 24px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-btn:hover { background: #a855f7; }
+
+/* ===================== HERO BANNER ===================== */
+.page-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 140px 40px 80px;
+  background: #0a0a0a;
+}
+.page-hero-glow {
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.3) 0%, rgba(76,29,149,0.1) 40%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+}
+.page-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #a855f7;
+  border: 1px solid rgba(168,85,247,0.4);
+  padding: 6px 18px;
+  margin-bottom: 28px;
+}
+.page-hero h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 32px;
+}
+.page-hero h1 span { color: #a855f7; }
+
+/* ===================== INTRO SECTION ===================== */
+.intro {
+  padding: 90px 60px;
+  background: #0d0d0d;
+}
+.intro-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.intro-text p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 22px;
+}
+.intro-text p:last-child {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #a855f7;
+  margin-bottom: 0;
+}
+.intro-visual {
+  position: relative;
+}
+.intro-card-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.intro-card {
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(147,51,234,0.25);
+  border-left: 3px solid #7c3aed;
+  padding: 28px 32px;
+  transition: background 0.3s;
+}
+.intro-card:hover { background: rgba(124,58,237,0.14); }
+.intro-card h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+.intro-card p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ===================== MISSION SECTION ===================== */
+.mission {
+  padding: 100px 60px;
+  background: #0a0a0a;
+  position: relative;
+  overflow: hidden;
+}
+.mission::before {
+  content: '';
+  position: absolute;
+  left: -200px; top: 50%;
+  transform: translateY(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.mission-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #a855f7;
+  margin-bottom: 16px;
+  display: block;
+}
+.section-heading {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 28px;
+}
+.section-heading span { color: #a855f7; }
+.mission-text p {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 20px;
+}
+.mission-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(147,51,234,0.2);
+}
+.mission-pillar {
+  background: #0a0a0a;
+  padding: 32px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  transition: background 0.3s;
+}
+.mission-pillar:hover { background: rgba(124,58,237,0.08); }
+.pillar-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.pillar-text h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+.pillar-text p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ===================== CARRIERS SECTION ===================== */
+.carriers {
+  padding: 90px 60px;
+  background: #0d0d0d;
+  text-align: center;
+}
+.carriers-inner { max-width: 900px; margin: 0 auto; }
+.carriers .section-heading { margin-bottom: 16px; }
+.carriers-sub {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 60px;
+  line-height: 1.7;
+}
+.carrier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: rgba(147,51,234,0.2);
+}
+.carrier-item {
+  background: #0d0d0d;
+  padding: 36px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.carrier-item:hover { background: rgba(124,58,237,0.08); }
+.carrier-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  transition: color 0.3s;
+}
+.carrier-item:hover .carrier-name { color: #a855f7; }
+.carrier-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(147,51,234,0.2);
+}
+
+/* ===================== STRIP ===================== */
+.strip {
+  background: #7c3aed;
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.strip-track {
+  display: inline-flex;
+  gap: 48px;
+  animation: stripScroll 20s linear infinite;
+}
+@keyframes stripScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.strip-item {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+.strip-dot { color: rgba(255,255,255,0.4); flex-shrink: 0; }
+
+/* ===================== CTA ===================== */
+.cta {
+  padding: 100px 60px;
+  background: linear-gradient(135deg, #1a0533 0%, #0d0d0d 50%, #150529 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 400px;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+.cta h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+.cta h2 span { color: #a855f7; }
+.cta p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 40px;
+}
+.cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #7c3aed;
+  padding: 18px 48px;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+}
+.cta-btn:hover { background: #a855f7; transform: translateY(-2px); }
+.cta-btn.outline {
+  background: transparent;
+  border: 1px solid rgba(168,85,247,0.5);
+}
+.cta-btn.outline:hover { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: #080808;
+  border-top: 1px solid rgba(147,51,234,0.25);
+  padding: 70px 60px 36px;
+}
+.footer-inner { max-width: 1100px; margin: 0 auto; }
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(147,51,234,0.15);
+}
+.footer-brand-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+.footer-brand-name span { color: #a855f7; }
+.footer-desc {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.45);
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+.footer-email { font-size: 0.82rem; color: #a855f7; text-decoration: none; }
+.footer-email:hover { text-decoration: underline; }
+footer h4 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 20px;
+}
+footer ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+footer ul a {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+footer ul a:hover { color: #a855f7; }
+.newsletter-row { display: flex; margin-top: 14px; }
+.newsletter-row input {
+  flex: 1;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(147,51,234,0.35);
+  border-right: none;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-family: 'Montserrat', sans-serif;
+  outline: none;
+}
+.newsletter-row input::placeholder { color: rgba(255,255,255,0.3); }
+.newsletter-row button {
+  padding: 11px 16px;
+  background: #7c3aed;
+  color: #ffffff;
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.2s;
+}
+.newsletter-row button:hover { background: #a855f7; }
+.footer-bottom {
+  max-width: 1100px;
+  margin: 28px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-bottom a:hover { color: #a855f7; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .intro, .mission, .carriers, .cta, footer { padding: 70px 24px; }
+  .page-hero { padding: 120px 24px 70px; }
+  .intro-inner, .mission-inner { grid-template-columns: 1fr; gap: 48px; }
+  .carrier-grid { grid-template-columns: repeat(2, 1fr); }
+  .carrier-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .cta-btns { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="revamped-agencies.html">Revamped <span>Agencies</span></a>
+  <ul class="nav-links">
+    <li><a href="revamped-agencies.html">Home</a></li>
+    <li><a href="overview.html" class="active">Overview</a></li>
+    <li><a href="revamped-agencies.html#contact">Contact</a></li>
+  </ul>
+  <a class="nav-btn" href="revamped-agencies.html#contact">Contact Us</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="page-eyebrow">Who We Are</div>
+    <h1>The Story Behind <span>Revamped</span></h1>
+  </div>
+</section>
+
+<!-- MARQUEE STRIP -->
+<div class="strip">
+  <div class="strip-track">
+    <span class="strip-item">Life Insurance</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Integrity</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Performance</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Revamped Agencies</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Elite Execution</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Six Figures</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Life Insurance</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Integrity</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Performance</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Revamped Agencies</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Elite Execution</span><span class="strip-dot">✦</span>
+    <span class="strip-item">Six Figures</span><span class="strip-dot">✦</span>
+  </div>
+</div>
+
+<!-- INTRO SECTION -->
+<section class="intro">
+  <div class="intro-inner">
+    <div class="intro-text">
+      <p>Revamped Agencies was built out of a simple belief: that the life insurance industry was overdue for a serious upgrade. Too many agents were being handed a contract, thrown into the deep end, and left to figure it out alone. We decided to change that.</p>
+      <p>We've built an agency from the ground up that actually invests in its people — with real training, real leads, and a real community behind every agent. Our focus is equal parts client protection and agent development, because when our agents thrive, families get better coverage and better service.</p>
+      <p>This is what a modern agency looks like. We built it. Now we're growing it.</p>
+    </div>
+    <div class="intro-visual">
+      <div class="intro-card-wrap">
+        <div class="intro-card">
+          <h4>Rooted in Integrity</h4>
+          <p>We do right by clients and agents alike. Every recommendation we make, every agent we bring on — it starts with honesty and ends with results.</p>
+        </div>
+        <div class="intro-card">
+          <h4>Obsessed with Performance</h4>
+          <p>We measure what matters. Our systems, our culture, and our coaching are all built around one goal: helping our agents produce at the highest level possible.</p>
+        </div>
+        <div class="intro-card">
+          <h4>Built for the Digital Age</h4>
+          <p>Our agents work from anywhere. Our tech, our leads, and our training infrastructure are all designed for a world where geography isn't a limitation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION SECTION -->
+<section class="mission">
+  <div class="mission-inner">
+    <div class="mission-pillars">
+      <div class="mission-pillar">
+        <span class="pillar-icon">🎯</span>
+        <div class="pillar-text">
+          <h4>Client-First Coverage</h4>
+          <p>Every client we work with gets straightforward guidance, honest recommendations, and a policy built around their actual needs — not a sales quota.</p>
+        </div>
+      </div>
+      <div class="mission-pillar">
+        <span class="pillar-icon">💻</span>
+        <div class="pillar-text">
+          <h4>Work From Anywhere</h4>
+          <p>Our entire operation is built to run virtually. Agents across the country close deals, attend training, and grow their business without ever being tied to a desk or office.</p>
+        </div>
+      </div>
+      <div class="mission-pillar">
+        <span class="pillar-icon">🚀</span>
+        <div class="pillar-text">
+          <h4>No-Fluff Execution</h4>
+          <p>We skip the corporate nonsense and focus on what actually produces results — sharp systems, direct coaching, and a team that holds a high standard across the board.</p>
+        </div>
+      </div>
+      <div class="mission-pillar">
+        <span class="pillar-icon">🤝</span>
+        <div class="pillar-text">
+          <h4>Mutual Growth</h4>
+          <p>When our agents win, clients get better service and our agency grows stronger. We've structured everything so those outcomes are inseparable.</p>
+        </div>
+      </div>
+    </div>
+    <div class="mission-text">
+      <span class="section-label">Our Mission</span>
+      <h2 class="section-heading">Protect Families.<br><span>Develop</span> Agents.</h2>
+      <p>Revamped Agencies exists to close two gaps at once: the gap between families and the financial protection they need, and the gap between agents and the income they're capable of earning.</p>
+      <p>We've built a fully remote operation that puts the right tools, the right leads, and the right coaching in front of every agent from day one. No hunting for prospects, no winging your pitch — just a clear path and a team behind you every step of the way.</p>
+      <p>Our standard is simple: do right by every client, develop every agent to their full potential, and never stop raising the bar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARRIERS SECTION -->
+<section class="carriers">
+  <div class="carriers-inner">
+    <span class="section-label" style="text-align:center; display:block;">Our Partners</span>
+    <h2 class="section-heading">Trusted <span>Carriers</span></h2>
+    <p class="carriers-sub">We've hand-selected our carrier partners based on financial strength, product depth, and their ability to serve the real families our agents work with every day.</p>
+    <div class="carrier-grid">
+      <div class="carrier-item"><span class="carrier-name">Mutual of Omaha</span></div>
+      <div class="carrier-item"><span class="carrier-name">Americo</span></div>
+      <div class="carrier-item"><span class="carrier-name">AIG</span></div>
+      <div class="carrier-item"><span class="carrier-name">Transamerica</span></div>
+      <div class="carrier-item"><span class="carrier-name">Royal Neighbors</span></div>
+      <div class="carrier-item"><span class="carrier-name">Aetna</span></div>
+      <div class="carrier-item"><span class="carrier-name">American Amicable</span></div>
+      <div class="carrier-item"><span class="carrier-name">Fidelity</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <span class="section-label" style="text-align:center; display:block; margin-bottom:16px;">Let's Talk</span>
+    <h2>You've Seen What We're <span>About</span>.</h2>
+    <p>If this feels like the right fit, we'd love to connect. Reach out and let's talk about where you are, where you want to go, and how Revamped Agencies can help you get there.</p>
+    <div class="cta-btns">
+      <a class="cta-btn" href="/cdn-cgi/l/email-protection#4920272f26093b2c3f2824392c2d282e2c272a202c3a672a2624">Contact Us</a>
+      <a class="cta-btn outline" href="revamped-agencies.html">Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Revamped <span>Agencies</span></div>
+        <p class="footer-desc">Empowering life insurance agents to build six-figure careers through mentorship, proven systems, and a culture built to win.</p>
+        <a class="footer-email" href="/cdn-cgi/l/email-protection#fd94939b92bd8f988b9c908d98999c9a98939e94988ed39e9290"><span class="__cf_email__" data-cfemail="670e09010827150211060a17020306000209040e02144904080a">[email&#160;protected]</span></a>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="revamped-agencies.html">Home</a></li>
+          <li><a href="overview.html">Overview</a></li>
+          <li><a href="revamped-agencies.html#contact">Contact</a></li>
+        </ul>
+        <div style="margin-top:28px;">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Accessibility Statement</a></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h4>Newsletter</h4>
+        <p style="font-size:0.82rem; color:rgba(255,255,255,0.45); line-height:1.6;">Subscribe for updates and insights.</p>
+        <div class="newsletter-row">
+          <input type="email" placeholder="Your email"/>
+          <button type="button">Go</button>
+        </div>
+      </div>
+  
