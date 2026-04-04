@@ -266,7 +266,7 @@ footer ul a:hover{color:var(--purple-light)}
   .footer-brand-name{font-size:1rem}
   .footer-desc{font-size:0.78rem}
   .footer-bottom{flex-direction:column;gap:10px;text-align:center;font-size:0.65rem}
-  #frame-canvas{display:none}
+  #frame-canvas{opacity:0.5}
   #particle-canvas{display:none}
   .noise{display:none}
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,10,0.95)}
@@ -623,8 +623,8 @@ window.addEventListener('scroll', () => {
         else p.classList.remove('active');
       });
 
-      // Update video frame based on sticky progress (skip on mobile for performance)
-      if (!isMobile && fLoaded > 0) {
+      // Update video frame based on sticky progress
+      if (fLoaded > 0) {
         const frameIndex = Math.min(Math.floor(progress * (fLoaded - 1)), fLoaded - 1);
         if (frameIndex !== curFrame) { curFrame = frameIndex; drawVFrame(curFrame); }
       }
@@ -731,20 +731,17 @@ const TOTAL_FRAMES = 451;
 const frames = [];
 let fLoaded = 0, curFrame = 0;
 
-if (isMobile) {
-  // On mobile, hide canvas and use CSS gradient background instead
-  fc.style.display = 'none';
-} else {
-  function resizeFrameCanvas() { fc.width = window.innerWidth; fc.height = window.innerHeight; }
-  resizeFrameCanvas();
-  window.addEventListener('resize', resizeFrameCanvas);
+function resizeFrameCanvas() { fc.width = window.innerWidth; fc.height = window.innerHeight; }
+resizeFrameCanvas();
+window.addEventListener('resize', resizeFrameCanvas);
 
-  for (let i = 1; i <= TOTAL_FRAMES; i++) {
-    const img = new Image();
-    img.src = `frames-webp/frame_${String(i).padStart(3, '0')}.webp`;
-    img.onload = () => { fLoaded++; if (fLoaded === 1) drawVFrame(0); };
-    frames.push(img);
-  }
+// On mobile, load every 5th frame to save memory/bandwidth
+const FRAME_STEP = isMobile ? 5 : 1;
+for (let i = 1; i <= TOTAL_FRAMES; i += FRAME_STEP) {
+  const img = new Image();
+  img.src = `frames-webp/frame_${String(i).padStart(3, '0')}.webp`;
+  img.onload = () => { fLoaded++; if (fLoaded === 1) drawVFrame(0); };
+  frames.push(img);
 }
 
 function drawVFrame(idx) {
