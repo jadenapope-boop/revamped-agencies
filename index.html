@@ -376,25 +376,25 @@ footer ul a:hover{color:var(--purple-light)}
         <img src="logo.jpg" alt="Revamped Agencies" style="height:160px;margin-bottom:48px;filter:drop-shadow(0 0 50px rgba(124,58,237,0.6));display:block;margin-left:auto;margin-right:auto"/>
         <a class="hero-cta mag-btn" href="#apply" style="display:inline-block">Apply Now</a>
       </div>
-      <!-- Talk to Rev — clickable AI overlay -->
-      <div class="rev-ai-overlay" id="revAiOverlay">
-        <div class="rev-ai-orb">
-          <div class="rev-orbit rev-orbit-1"></div>
-          <div class="rev-orbit rev-orbit-2"></div>
-          <div class="rev-orbit rev-orbit-3"></div>
-          <div class="rev-ai-ring-pulse"></div>
-          <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
-          <button class="rev-ai-btn" id="revAiBtn">
-            <svg id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-            <svg id="revStopIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
-          </button>
-        </div>
-        <div class="rev-ai-label" id="revAiLabel">
-          <span class="rev-ai-label-text">TALK TO REV</span>
-          <span class="rev-ai-label-sub">AI Recruiter — Tap to Talk</span>
-        </div>
-        <div class="rev-ai-status-text" id="revStatusText" style="display:none"></div>
+    </div>
+    <!-- Talk to Rev — OUTSIDE sticky-content to avoid overflow:hidden clipping -->
+    <div class="rev-ai-overlay" id="revAiOverlay">
+      <div class="rev-ai-orb">
+        <div class="rev-orbit rev-orbit-1"></div>
+        <div class="rev-orbit rev-orbit-2"></div>
+        <div class="rev-orbit rev-orbit-3"></div>
+        <div class="rev-ai-ring-pulse"></div>
+        <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
+        <button class="rev-ai-btn" id="revAiBtn">
+          <svg id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <svg id="revStopIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        </button>
       </div>
+      <div class="rev-ai-label" id="revAiLabel">
+        <span class="rev-ai-label-text">TALK TO REV</span>
+        <span class="rev-ai-label-sub">AI Recruiter — Tap to Talk</span>
+      </div>
+      <div class="rev-ai-status-text" id="revStatusText" style="display:none"></div>
     </div>
   </div>
 </div>
