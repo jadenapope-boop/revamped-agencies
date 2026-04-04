@@ -814,11 +814,14 @@ function resizeFrameCanvas() { fc.width = window.innerWidth; fc.height = window.
 resizeFrameCanvas();
 window.addEventListener('resize', resizeFrameCanvas);
 
-// On mobile, load every 5th frame to save memory/bandwidth
-const FRAME_STEP = isMobile ? 5 : 1;
-for (let i = 1; i <= TOTAL_FRAMES; i += FRAME_STEP) {
+// Mobile gets its own vertical video frames, desktop gets original
+const MOBILE_FRAMES = 226;
+const FRAME_COUNT = isMobile ? MOBILE_FRAMES : TOTAL_FRAMES;
+const FRAME_DIR = isMobile ? 'frames-mobile-webp' : 'frames-webp';
+const FRAME_STEP = 1;
+for (let i = 1; i <= FRAME_COUNT; i += FRAME_STEP) {
   const img = new Image();
-  img.src = `frames-webp/frame_${String(i).padStart(3, '0')}.webp`;
+  img.src = `${FRAME_DIR}/frame_${String(i).padStart(3, '0')}.webp`;
   img.onload = () => { fLoaded++; if (fLoaded === 1) drawVFrame(0); };
   frames.push(img);
 }
