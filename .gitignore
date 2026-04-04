@@ -1,0 +1,10 @@
+# Old PNG frames (747MB — replaced by WebP)
+frames/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
