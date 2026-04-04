@@ -121,47 +121,27 @@ section{position:relative;z-index:2}
 .big-statement{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;line-height:1.15}
 .big-statement span{background:linear-gradient(135deg,var(--purple-light),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ═══ REV AI OVERLAY ═══ */
-.rev-ai-overlay{position:absolute;right:14%;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:auto;opacity:0;transition:opacity 0.8s ease}
-.rev-ai-overlay.visible{opacity:1}
-/* Outer orbit rings */
-.rev-ai-orb{position:relative;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
+/* ═══ REV AI LABEL + VAPI BUTTON STYLING ═══ */
+.rev-ai-label-wrapper{position:absolute;right:14%;top:42%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:none;opacity:0;transition:opacity 0.8s ease}
+.rev-ai-label-wrapper.visible{opacity:1}
+.rev-label-inner{text-align:center;position:relative;z-index:2}
 .rev-orbit{position:absolute;border-radius:50%;border:1px solid transparent;animation-timing-function:linear;animation-iteration-count:infinite}
 .rev-orbit-1{inset:-20px;border-color:rgba(124,58,237,0.15);animation:rev-spin 12s linear infinite}
 .rev-orbit-2{inset:-35px;border-color:rgba(168,85,247,0.08);animation:rev-spin 20s linear infinite reverse}
-.rev-orbit-3{inset:-50px;border-color:rgba(124,58,237,0.05);animation:rev-spin 30s linear infinite}
-/* Orbit dots */
 .rev-orbit-1::after{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;background:var(--purple-light);border-radius:50%;box-shadow:0 0 12px var(--purple-light)}
 .rev-orbit-2::after{content:'';position:absolute;bottom:-2px;right:20%;width:4px;height:4px;background:rgba(168,85,247,0.6);border-radius:50%;box-shadow:0 0 8px rgba(168,85,247,0.4)}
-.rev-orbit-3::after{content:'';position:absolute;top:30%;left:-2px;width:3px;height:3px;background:rgba(124,58,237,0.4);border-radius:50%;box-shadow:0 0 6px rgba(124,58,237,0.3)}
 @keyframes rev-spin{to{transform:rotate(360deg)}}
-/* Pulse rings */
 .rev-ai-ring-pulse{position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(124,58,237,0.3);animation:rev-pulse-ring 3s ease-out infinite}
 .rev-ai-ring-pulse-2{animation-delay:1.5s}
 @keyframes rev-pulse-ring{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.8);opacity:0}}
-/* Main button */
-.rev-ai-btn{width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.25),rgba(124,58,237,0.1) 60%,rgba(6,6,10,0.6));border:2px solid rgba(124,58,237,0.5);color:#c084fc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 0 30px rgba(124,58,237,0.2),inset 0 1px 0 rgba(255,255,255,0.08)}
-.rev-ai-btn:hover{background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.4),rgba(124,58,237,0.2) 60%,rgba(6,6,10,0.4));border-color:var(--purple-light);box-shadow:0 0 50px rgba(124,58,237,0.4),0 0 100px rgba(124,58,237,0.15),inset 0 1px 0 rgba(255,255,255,0.12);transform:scale(1.06)}
-.rev-ai-btn svg{width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(168,85,247,0.6))}
-.rev-ai-btn.active{background:radial-gradient(circle at 50% 50%,rgba(124,58,237,0.5),rgba(76,29,149,0.3));border-color:#c084fc;box-shadow:0 0 60px rgba(124,58,237,0.6),0 0 120px rgba(124,58,237,0.2);animation:rev-btn-glow 2s ease-in-out infinite}
-@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 40px rgba(124,58,237,0.4),0 0 80px rgba(124,58,237,0.1)}50%{box-shadow:0 0 60px rgba(124,58,237,0.7),0 0 120px rgba(124,58,237,0.25)}}
-/* Label */
-.rev-ai-label{text-align:center}
-.rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 30px rgba(124,58,237,0.5)}
-.rev-ai-label-sub{display:block;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:6px}
-/* Status during call */
-.rev-ai-status{text-align:center}
-.rev-ai-visualizer{display:flex;gap:4px;justify-content:center;align-items:center;height:32px;margin-bottom:8px}
-.rev-ai-visualizer span{width:4px;background:linear-gradient(180deg,var(--purple-light),rgba(124,58,237,0.3));border-radius:3px;animation:rev-bar 0.8s ease-in-out infinite}
-.rev-ai-visualizer span:nth-child(1){height:10px;animation-delay:0s}
-.rev-ai-visualizer span:nth-child(2){height:20px;animation-delay:0.1s}
-.rev-ai-visualizer span:nth-child(3){height:28px;animation-delay:0.15s}
-.rev-ai-visualizer span:nth-child(4){height:22px;animation-delay:0.25s}
-.rev-ai-visualizer span:nth-child(5){height:14px;animation-delay:0.35s}
-.rev-ai-visualizer span:nth-child(6){height:18px;animation-delay:0.45s}
-.rev-ai-visualizer span:nth-child(7){height:8px;animation-delay:0.5s}
-@keyframes rev-bar{0%,100%{transform:scaleY(0.3);opacity:0.4}50%{transform:scaleY(1);opacity:1}}
-.rev-ai-status-text{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 15px rgba(124,58,237,0.4)}
+.rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 30px rgba(124,58,237,0.5)}
+.rev-ai-label-sub{display:block;font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:6px}
+/* Style the Vapi default button to look like our design */
+.vapi-btn{width:80px!important;height:80px!important;border:2px solid rgba(124,58,237,0.5)!important;background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.25),rgba(124,58,237,0.1) 60%,rgba(6,6,10,0.6))!important;box-shadow:0 0 30px rgba(124,58,237,0.3),inset 0 1px 0 rgba(255,255,255,0.08)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;transition:all 0.3s!important}
+.vapi-btn:hover{box-shadow:0 0 50px rgba(124,58,237,0.5),0 0 100px rgba(124,58,237,0.15)!important;border-color:var(--purple-light)!important;transform:scale(1.06)!important}
+.vapi-btn-is-active{background:radial-gradient(circle at 50% 50%,rgba(124,58,237,0.5),rgba(76,29,149,0.3))!important;border-color:#c084fc!important;box-shadow:0 0 60px rgba(124,58,237,0.6)!important;animation:rev-btn-glow 2s ease-in-out infinite!important}
+.vapi-btn-is-speaking{box-shadow:0 0 60px rgba(124,58,237,0.8)!important}
+@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 40px rgba(124,58,237,0.4)}50%{box-shadow:0 0 60px rgba(124,58,237,0.7)}}
 
 /* ═══ TYPEWRITER ═══ */
 .typewriter{border-right:3px solid var(--purple-light);animation:blink 0.8s step-end infinite;display:inline;white-space:normal}
@@ -314,11 +294,8 @@ footer ul a:hover{color:var(--purple-light)}
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,10,0.95)}
   .tech-card,.compare-col,.culture-card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .sticky-viewport{background:linear-gradient(135deg,#0a0015 0%,#1a0a2e 30%,#0d0520 60%,#06060a 100%)}
-  .rev-ai-overlay{left:50%;top:auto;bottom:15%;transform:translateX(-50%) translateY(0)}
-  .rev-ai-orb{width:100px;height:100px}
-  .rev-ai-btn{width:72px;height:72px}
-  .rev-ai-btn svg{width:28px;height:28px}
-  .rev-orbit-1{inset:-12px}.rev-orbit-2{inset:-22px}.rev-orbit-3{display:none}
+  .rev-ai-label-wrapper{right:50%;transform:translateX(50%) translateY(-50%);top:auto;bottom:18%}
+  .rev-orbit-1{inset:-12px}.rev-orbit-2{inset:-22px}
   .rev-ai-label-text{font-size:0.75rem;letter-spacing:4px}
 }
 @media(max-width:400px){
@@ -391,28 +368,15 @@ footer ul a:hover{color:var(--purple-light)}
         <img src="logo.jpg" alt="Revamped Agencies" style="height:160px;margin-bottom:48px;filter:drop-shadow(0 0 50px rgba(124,58,237,0.6));display:block;margin-left:auto;margin-right:auto"/>
         <a class="hero-cta mag-btn" href="#apply" style="display:inline-block">Apply Now</a>
       </div>
-      <!-- Talk to Rev — interactive AI overlay -->
-      <div class="rev-ai-overlay" id="revAiOverlay">
-        <div class="rev-ai-orb">
-          <div class="rev-orbit rev-orbit-1"></div>
-          <div class="rev-orbit rev-orbit-2"></div>
-          <div class="rev-orbit rev-orbit-3"></div>
-          <div class="rev-ai-ring-pulse"></div>
-          <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
-          <button class="rev-ai-btn" id="revAiBtn" onclick="toggleRevCall()">
-            <svg class="rev-mic-icon" id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-            <svg class="rev-phone-icon" id="revPhoneIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.5 15.5l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.86.53 2.81.7a2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-6-6A19.79 19.79 0 0 1 4.53 3.82 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.17.95.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91"/></svg>
-          </button>
-        </div>
-        <div class="rev-ai-label" id="revAiLabel">
+      <!-- Talk to Rev label (decorative — actual button is the Vapi widget) -->
+      <div class="rev-ai-label-wrapper" id="revLabelWrapper">
+        <div class="rev-orbit rev-orbit-1"></div>
+        <div class="rev-orbit rev-orbit-2"></div>
+        <div class="rev-ai-ring-pulse"></div>
+        <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
+        <div class="rev-label-inner">
           <span class="rev-ai-label-text">TALK TO REV</span>
-          <span class="rev-ai-label-sub">AI Recruiter — Ask Anything</span>
-        </div>
-        <div class="rev-ai-status" id="revAiStatus" style="display:none">
-          <div class="rev-ai-visualizer" id="revVisualizer">
-            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <span class="rev-ai-status-text" id="revStatusText">Listening...</span>
+          <span class="rev-ai-label-sub">Click the mic below</span>
         </div>
       </div>
     </div>
@@ -695,11 +659,11 @@ window.addEventListener('scroll', () => {
         else p.classList.remove('active');
       });
 
-      // Show Rev AI overlay only during Phase 1
-      var revOverlay = document.getElementById('revAiOverlay');
-      if (revOverlay) {
-        if (activePhase === 0 && progress < 0.3) revOverlay.classList.add('visible');
-        else revOverlay.classList.remove('visible');
+      // Show Rev label only during Phase 1
+      var revLbl = document.getElementById('revLabelWrapper');
+      if (revLbl) {
+        if (activePhase === 0 && progress < 0.3) revLbl.classList.add('visible');
+        else revLbl.classList.remove('visible');
       }
 
       // Update video frame based on sticky progress
@@ -857,50 +821,14 @@ if (glitchEl) {
   setTimeout(typeNext, 800);
 }
 
-// ═══ VAPI VOICE — "Talk to Rev" (embedded in hero) ═══
-var vapiInstance = null;
-var revCallActive = false;
-var revBtn = document.getElementById('revAiBtn');
-var revLabel = document.getElementById('revAiLabel');
-var revStatus = document.getElementById('revAiStatus');
-var revStatusText = document.getElementById('revStatusText');
-var revMicIcon = document.getElementById('revMicIcon');
-var revPhoneIcon = document.getElementById('revPhoneIcon');
-
-function toggleRevCall() {
-  if (!vapiInstance) {
-    revStatusText.textContent = 'Loading...';
-    revLabel.style.display = 'none';
-    revStatus.style.display = 'block';
-    setTimeout(function() { if (!vapiInstance) { revLabel.style.display = 'block'; revStatus.style.display = 'none'; } }, 3000);
-    return;
-  }
-  if (revCallActive) {
-    vapiInstance.stop();
-  } else {
-    revBtn.classList.add('active');
-    revLabel.style.display = 'none';
-    revStatus.style.display = 'block';
-    revStatusText.textContent = 'Connecting...';
-    // Try clicking the hidden Vapi button to trigger with proper browser context
-    var hiddenBtn = document.querySelector('.vapi-btn');
-    if (hiddenBtn) {
-      hiddenBtn.style.display = 'block';
-      hiddenBtn.click();
-      hiddenBtn.style.display = 'none';
-    } else {
-      vapiInstance.start("935aee34-06a0-4c89-8d95-ff273472ce36");
-    }
-  }
-}
-
-// Show rev overlay after a brief delay
+// ═══ VAPI VOICE — "Talk to Rev" ═══
+// Show label with delay
 setTimeout(function() {
-  var overlay = document.getElementById('revAiOverlay');
-  if (overlay) overlay.classList.add('visible');
+  var lbl = document.getElementById('revLabelWrapper');
+  if (lbl) lbl.classList.add('visible');
 }, 1200);
 
-// Load Vapi SDK (html-script-tag version — browser-native UMD bundle)
+// Load Vapi SDK — their button works natively, we just restyle it with CSS
 (function (d, t) {
   var g = document.createElement(t),
       s = d.getElementsByTagName(t)[0];
@@ -908,64 +836,39 @@ setTimeout(function() {
   g.defer = true;
   g.async = true;
   s.parentNode.insertBefore(g, s);
-
   g.onload = function () {
-    vapiInstance = window.vapiSDK.run({
+    window.vapiSDK.run({
       apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
       assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
       config: {
-        position: "bottom-left",
-        offset: "40px",
-        width: "50px",
-        height: "50px",
-        idle: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
-        loading: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
-        active: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
+        position: "bottom-right",
+        offset: "32px",
+        width: "80px",
+        height: "80px",
+        idle: {
+          color: "rgb(26, 10, 46)",
+          type: "pill",
+          title: "Talk to Rev",
+          subtitle: "AI Recruiter",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg",
+        },
+        loading: {
+          color: "rgb(76, 29, 149)",
+          type: "pill",
+          title: "Connecting...",
+          subtitle: "One moment",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg",
+        },
+        active: {
+          color: "rgb(124, 58, 237)",
+          type: "pill",
+          title: "Live with Rev",
+          subtitle: "Tap to end",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg",
+        },
       },
     });
-    // Hide the default Vapi button completely
-    setTimeout(function() {
-      var vapiBtn = document.querySelector('.vapi-btn');
-      if (vapiBtn) vapiBtn.style.cssText = 'display:none!important';
-    }, 500);
-
-    vapiInstance.on('call-start', function() {
-      revCallActive = true;
-      revBtn.classList.add('active');
-      revLabel.style.display = 'none';
-      revStatus.style.display = 'block';
-      revStatusText.textContent = 'Connected';
-      revMicIcon.style.display = 'none';
-      revPhoneIcon.style.display = 'block';
-    });
-
-    vapiInstance.on('call-end', function() {
-      revCallActive = false;
-      revBtn.classList.remove('active');
-      revLabel.style.display = 'block';
-      revStatus.style.display = 'none';
-      revMicIcon.style.display = 'block';
-      revPhoneIcon.style.display = 'none';
-    });
-
-    vapiInstance.on('speech-start', function() {
-      revStatusText.textContent = 'Rev is talking...';
-    });
-
-    vapiInstance.on('speech-end', function() {
-      revStatusText.textContent = 'Listening...';
-    });
-
-    vapiInstance.on('error', function(err) {
-      console.error('[Vapi] Error:', err);
-      revCallActive = false;
-      revBtn.classList.remove('active');
-      revLabel.style.display = 'block';
-      revStatus.style.display = 'none';
-      revStatusText.textContent = '';
-    });
-
-    console.log('[Vapi] SDK loaded and ready');
+    console.log('[Vapi] Ready');
   };
 })(document, "script");
 </script>
