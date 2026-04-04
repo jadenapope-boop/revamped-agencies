@@ -869,7 +869,10 @@ var revPhoneIcon = document.getElementById('revPhoneIcon');
 
 function toggleRevCall() {
   if (!vapiInstance) {
-    alert('Voice AI is still loading. Try again in a moment.');
+    revStatusText.textContent = 'Loading...';
+    revLabel.style.display = 'none';
+    revStatus.style.display = 'block';
+    setTimeout(function() { if (!vapiInstance) { revLabel.style.display = 'block'; revStatus.style.display = 'none'; } }, 3000);
     return;
   }
   if (revCallActive) {
@@ -893,7 +896,7 @@ setTimeout(function() {
 (function (d, t) {
   var g = document.createElement(t),
       s = d.getElementsByTagName(t)[0];
-  g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+  g.src = "vapi-sdk.js";
   g.defer = true;
   g.async = true;
   s.parentNode.insertBefore(g, s);
