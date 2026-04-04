@@ -121,6 +121,31 @@ section{position:relative;z-index:2}
 .big-statement{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;line-height:1.15}
 .big-statement span{background:linear-gradient(135deg,var(--purple-light),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 
+/* ═══ REV AI OVERLAY ═══ */
+.rev-ai-overlay{position:absolute;right:12%;bottom:22%;z-index:6;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:auto}
+.rev-ai-ring{position:relative;width:80px;height:80px;display:flex;align-items:center;justify-content:center}
+.rev-ai-ring-pulse{position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(124,58,237,0.4);animation:rev-pulse-ring 2s ease-in-out infinite}
+.rev-ai-ring-pulse-2{animation-delay:1s}
+@keyframes rev-pulse-ring{0%{transform:scale(1);opacity:0.6}50%{transform:scale(1.3);opacity:0}100%{transform:scale(1);opacity:0}}
+.rev-ai-btn{width:64px;height:64px;border-radius:50%;background:rgba(124,58,237,0.2);border:2px solid rgba(124,58,237,0.6);color:#a855f7;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.rev-ai-btn:hover{background:rgba(124,58,237,0.4);border-color:var(--purple-light);box-shadow:0 0 30px rgba(124,58,237,0.5);transform:scale(1.08)}
+.rev-ai-btn svg{width:26px;height:26px}
+.rev-ai-btn.active{background:rgba(124,58,237,0.6);border-color:#c084fc;box-shadow:0 0 40px rgba(124,58,237,0.7);animation:rev-btn-glow 1.5s ease-in-out infinite}
+@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 30px rgba(124,58,237,0.5)}50%{box-shadow:0 0 50px rgba(124,58,237,0.9)}}
+.rev-ai-label{text-align:center}
+.rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 20px rgba(124,58,237,0.5)}
+.rev-ai-label-sub{display:block;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+.rev-ai-status{text-align:center}
+.rev-ai-visualizer{display:flex;gap:3px;justify-content:center;align-items:center;height:24px;margin-bottom:6px}
+.rev-ai-visualizer span{width:3px;background:var(--purple-light);border-radius:2px;animation:rev-bar 0.8s ease-in-out infinite}
+.rev-ai-visualizer span:nth-child(1){height:8px;animation-delay:0s}
+.rev-ai-visualizer span:nth-child(2){height:16px;animation-delay:0.1s}
+.rev-ai-visualizer span:nth-child(3){height:22px;animation-delay:0.2s}
+.rev-ai-visualizer span:nth-child(4){height:14px;animation-delay:0.3s}
+.rev-ai-visualizer span:nth-child(5){height:10px;animation-delay:0.4s}
+@keyframes rev-bar{0%,100%{transform:scaleY(0.4);opacity:0.5}50%{transform:scaleY(1);opacity:1}}
+.rev-ai-status-text{font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--purple-light)}
+
 /* ═══ TYPEWRITER ═══ */
 .typewriter{border-right:3px solid var(--purple-light);animation:blink 0.8s step-end infinite;display:inline;white-space:normal}
 @keyframes blink{50%{border-color:transparent}}
@@ -272,6 +297,10 @@ footer ul a:hover{color:var(--purple-light)}
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,10,0.95)}
   .tech-card,.compare-col,.culture-card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .sticky-viewport{background:linear-gradient(135deg,#0a0015 0%,#1a0a2e 30%,#0d0520 60%,#06060a 100%)}
+  .rev-ai-overlay{right:50%;bottom:12%;transform:translateX(50%)}
+  .rev-ai-btn{width:56px;height:56px}
+  .rev-ai-btn svg{width:22px;height:22px}
+  .rev-ai-label-text{font-size:0.6rem;letter-spacing:3px}
 }
 @media(max-width:400px){
   .glitch{font-size:1.6rem!important}
@@ -342,6 +371,27 @@ footer ul a:hover{color:var(--purple-light)}
       <div class="sticky-phase phase-statement" id="phase3" style="left:50%;text-align:center;transform:translateX(-50%) translateY(40px);width:auto">
         <img src="logo.jpg" alt="Revamped Agencies" style="height:160px;margin-bottom:48px;filter:drop-shadow(0 0 50px rgba(124,58,237,0.6));display:block;margin-left:auto;margin-right:auto"/>
         <a class="hero-cta mag-btn" href="#apply" style="display:inline-block">Apply Now</a>
+      </div>
+      <!-- Talk to Rev — interactive AI overlay -->
+      <div class="rev-ai-overlay" id="revAiOverlay">
+        <div class="rev-ai-ring" id="revRing">
+          <div class="rev-ai-ring-pulse"></div>
+          <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
+          <button class="rev-ai-btn" id="revAiBtn" onclick="toggleRevCall()">
+            <svg class="rev-mic-icon" id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <svg class="rev-phone-icon" id="revPhoneIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 2.59 3.4z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <div class="rev-ai-label" id="revAiLabel">
+          <span class="rev-ai-label-text">TALK TO REV</span>
+          <span class="rev-ai-label-sub">AI Recruiter — Ask Anything</span>
+        </div>
+        <div class="rev-ai-status" id="revAiStatus" style="display:none">
+          <div class="rev-ai-visualizer" id="revVisualizer">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="rev-ai-status-text" id="revStatusText">Listening...</span>
+        </div>
       </div>
     </div>
   </div>
@@ -775,7 +825,19 @@ if (glitchEl) {
   setTimeout(typeNext, 800);
 }
 
-// ═══ VAPI VOICE WIDGET — "Talk to Rev" ═══
+// ═══ VAPI VOICE — "Talk to Rev" (embedded in hero) ═══
+let vapiInstance = null;
+let revCallActive = false;
+
+function toggleRevCall() {
+  if (!vapiInstance) return;
+  if (revCallActive) {
+    vapiInstance.stop();
+  } else {
+    vapiInstance.start("935aee34-06a0-4c89-8d95-ff273472ce36");
+  }
+}
+
 (function (d, t) {
   var g = document.createElement(t),
       s = d.getElementsByTagName(t)[0];
@@ -785,48 +847,55 @@ if (glitchEl) {
   s.parentNode.insertBefore(g, s);
 
   g.onload = function () {
-    window.vapiSDK.run({
+    vapiInstance = window.vapiSDK.run({
       apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
-      assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
+      assistant: undefined,
       config: {
+        hide: true,
         position: "bottom-right",
-        offset: "32px",
-        width: "60px",
-        height: "60px",
-        idle: {
-          color: "rgb(26, 10, 46)",
-          type: "pill",
-          title: "Talk to Rev",
-          subtitle: "AI Recruiter",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg",
-        },
-        loading: {
-          color: "rgb(76, 29, 149)",
-          type: "pill",
-          title: "Connecting...",
-          subtitle: "One second",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg",
-        },
-        active: {
-          color: "rgb(124, 58, 237)",
-          type: "pill",
-          title: "Live with Rev",
-          subtitle: "Tap to end",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg",
-        },
+        offset: "40px",
+        width: "50px",
+        height: "50px",
+        idle: { color: "rgb(26, 10, 46)", type: "round", title: "", subtitle: "", icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg" },
+        loading: { color: "rgb(76, 29, 149)", type: "round", title: "", subtitle: "" },
+        active: { color: "rgb(124, 58, 237)", type: "round", title: "", subtitle: "" },
       },
+    });
+
+    const btn = document.getElementById('revAiBtn');
+    const label = document.getElementById('revAiLabel');
+    const status = document.getElementById('revAiStatus');
+    const statusText = document.getElementById('revStatusText');
+    const micIcon = document.getElementById('revMicIcon');
+    const phoneIcon = document.getElementById('revPhoneIcon');
+
+    vapiInstance.on('call-start', function() {
+      revCallActive = true;
+      btn.classList.add('active');
+      label.style.display = 'none';
+      status.style.display = 'block';
+      statusText.textContent = 'Connected';
+      micIcon.style.display = 'none';
+      phoneIcon.style.display = 'block';
+    });
+
+    vapiInstance.on('call-end', function() {
+      revCallActive = false;
+      btn.classList.remove('active');
+      label.style.display = 'block';
+      status.style.display = 'none';
+      micIcon.style.display = 'block';
+      phoneIcon.style.display = 'none';
+    });
+
+    vapiInstance.on('speech-start', function() {
+      statusText.textContent = 'Rev is talking...';
+    });
+
+    vapiInstance.on('speech-end', function() {
+      statusText.textContent = 'Listening...';
     });
   };
 })(document, "script");
-</script>
-
-<style>
-/* Vapi button glow */
-.vapi-btn{box-shadow:0 0 24px rgba(124,58,237,0.45)!important;transition:box-shadow 0.3s ease!important}
-.vapi-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.7)!important}
-.vapi-btn-is-active{background:rgb(124,58,237)!important}
-.vapi-btn-is-speaking{box-shadow:0 0 40px rgba(124,58,237,1.0)!important;animation:vapi-pulse 1.2s ease-in-out infinite}
-@keyframes vapi-pulse{0%,100%{box-shadow:0 0 24px rgba(124,58,237,0.6)}50%{box-shadow:0 0 48px rgba(124,58,237,1.0)}}
-</style>
 </body>
 </html>
