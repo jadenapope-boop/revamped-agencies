@@ -121,27 +121,32 @@ section{position:relative;z-index:2}
 .big-statement{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4.5vw,3.5rem);font-weight:800;letter-spacing:-0.02em;text-transform:uppercase;line-height:1.15}
 .big-statement span{background:linear-gradient(135deg,var(--purple-light),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ═══ REV AI LABEL + VAPI BUTTON STYLING ═══ */
-.rev-ai-label-wrapper{position:absolute;right:14%;top:42%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:none;opacity:0;transition:opacity 0.8s ease}
-.rev-ai-label-wrapper.visible{opacity:1}
-.rev-label-inner{text-align:center;position:relative;z-index:2}
-.rev-orbit{position:absolute;border-radius:50%;border:1px solid transparent;animation-timing-function:linear;animation-iteration-count:infinite}
+/* ═══ REV AI — CUSTOM BUTTON + HIDDEN VAPI DEFAULT ═══ */
+.vapi-btn{display:none!important}
+.rev-ai-overlay{position:absolute;right:14%;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:auto;opacity:0;transition:opacity 0.8s ease}
+.rev-ai-overlay.visible{opacity:1}
+.rev-ai-orb{position:relative;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
+.rev-orbit{position:absolute;border-radius:50%;border:1px solid transparent}
 .rev-orbit-1{inset:-20px;border-color:rgba(124,58,237,0.15);animation:rev-spin 12s linear infinite}
 .rev-orbit-2{inset:-35px;border-color:rgba(168,85,247,0.08);animation:rev-spin 20s linear infinite reverse}
+.rev-orbit-3{inset:-50px;border-color:rgba(124,58,237,0.05);animation:rev-spin 30s linear infinite}
 .rev-orbit-1::after{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;background:var(--purple-light);border-radius:50%;box-shadow:0 0 12px var(--purple-light)}
 .rev-orbit-2::after{content:'';position:absolute;bottom:-2px;right:20%;width:4px;height:4px;background:rgba(168,85,247,0.6);border-radius:50%;box-shadow:0 0 8px rgba(168,85,247,0.4)}
+.rev-orbit-3::after{content:'';position:absolute;top:30%;left:-2px;width:3px;height:3px;background:rgba(124,58,237,0.4);border-radius:50%;box-shadow:0 0 6px rgba(124,58,237,0.3)}
 @keyframes rev-spin{to{transform:rotate(360deg)}}
 .rev-ai-ring-pulse{position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(124,58,237,0.3);animation:rev-pulse-ring 3s ease-out infinite}
 .rev-ai-ring-pulse-2{animation-delay:1.5s}
 @keyframes rev-pulse-ring{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.8);opacity:0}}
+.rev-ai-btn{width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.25),rgba(124,58,237,0.1) 60%,rgba(6,6,10,0.6));border:2px solid rgba(124,58,237,0.5);color:#c084fc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.4s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 0 30px rgba(124,58,237,0.2),inset 0 1px 0 rgba(255,255,255,0.08)}
+.rev-ai-btn:hover{background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.4),rgba(124,58,237,0.2) 60%,rgba(6,6,10,0.4));border-color:var(--purple-light);box-shadow:0 0 50px rgba(124,58,237,0.4),0 0 100px rgba(124,58,237,0.15);transform:scale(1.06)}
+.rev-ai-btn svg{width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(168,85,247,0.6))}
+.rev-ai-btn.active{background:radial-gradient(circle at 50% 50%,rgba(124,58,237,0.5),rgba(76,29,149,0.3));border-color:#c084fc;box-shadow:0 0 60px rgba(124,58,237,0.6);animation:rev-btn-glow 2s ease-in-out infinite}
+.rev-ai-btn.connecting{opacity:0.7;animation:rev-btn-glow 0.8s ease-in-out infinite}
+@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 40px rgba(124,58,237,0.4)}50%{box-shadow:0 0 60px rgba(124,58,237,0.7)}}
+.rev-ai-label{text-align:center}
 .rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 30px rgba(124,58,237,0.5)}
 .rev-ai-label-sub{display:block;font-size:0.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:6px}
-/* Style the Vapi default button to look like our design */
-.vapi-btn{width:80px!important;height:80px!important;border:2px solid rgba(124,58,237,0.5)!important;background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.25),rgba(124,58,237,0.1) 60%,rgba(6,6,10,0.6))!important;box-shadow:0 0 30px rgba(124,58,237,0.3),inset 0 1px 0 rgba(255,255,255,0.08)!important;backdrop-filter:blur(20px)!important;-webkit-backdrop-filter:blur(20px)!important;transition:all 0.3s!important}
-.vapi-btn:hover{box-shadow:0 0 50px rgba(124,58,237,0.5),0 0 100px rgba(124,58,237,0.15)!important;border-color:var(--purple-light)!important;transform:scale(1.06)!important}
-.vapi-btn-is-active{background:radial-gradient(circle at 50% 50%,rgba(124,58,237,0.5),rgba(76,29,149,0.3))!important;border-color:#c084fc!important;box-shadow:0 0 60px rgba(124,58,237,0.6)!important;animation:rev-btn-glow 2s ease-in-out infinite!important}
-.vapi-btn-is-speaking{box-shadow:0 0 60px rgba(124,58,237,0.8)!important}
-@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 40px rgba(124,58,237,0.4)}50%{box-shadow:0 0 60px rgba(124,58,237,0.7)}}
+.rev-ai-status-text{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 15px rgba(124,58,237,0.4)}
 
 /* ═══ TYPEWRITER ═══ */
 .typewriter{border-right:3px solid var(--purple-light);animation:blink 0.8s step-end infinite;display:inline;white-space:normal}
@@ -294,8 +299,11 @@ footer ul a:hover{color:var(--purple-light)}
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,10,0.95)}
   .tech-card,.compare-col,.culture-card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .sticky-viewport{background:linear-gradient(135deg,#0a0015 0%,#1a0a2e 30%,#0d0520 60%,#06060a 100%)}
-  .rev-ai-label-wrapper{right:50%;transform:translateX(50%) translateY(-50%);top:auto;bottom:18%}
-  .rev-orbit-1{inset:-12px}.rev-orbit-2{inset:-22px}
+  .rev-ai-overlay{right:50%;transform:translateX(50%) translateY(0);top:auto;bottom:15%}
+  .rev-ai-orb{width:100px;height:100px}
+  .rev-ai-btn{width:72px;height:72px}
+  .rev-ai-btn svg{width:28px;height:28px}
+  .rev-orbit-1{inset:-12px}.rev-orbit-2{inset:-22px}.rev-orbit-3{display:none}
   .rev-ai-label-text{font-size:0.75rem;letter-spacing:4px}
 }
 @media(max-width:400px){
@@ -368,16 +376,24 @@ footer ul a:hover{color:var(--purple-light)}
         <img src="logo.jpg" alt="Revamped Agencies" style="height:160px;margin-bottom:48px;filter:drop-shadow(0 0 50px rgba(124,58,237,0.6));display:block;margin-left:auto;margin-right:auto"/>
         <a class="hero-cta mag-btn" href="#apply" style="display:inline-block">Apply Now</a>
       </div>
-      <!-- Talk to Rev label (decorative — actual button is the Vapi widget) -->
-      <div class="rev-ai-label-wrapper" id="revLabelWrapper">
-        <div class="rev-orbit rev-orbit-1"></div>
-        <div class="rev-orbit rev-orbit-2"></div>
-        <div class="rev-ai-ring-pulse"></div>
-        <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
-        <div class="rev-label-inner">
-          <span class="rev-ai-label-text">TALK TO REV</span>
-          <span class="rev-ai-label-sub">Click the mic below</span>
+      <!-- Talk to Rev — clickable AI overlay -->
+      <div class="rev-ai-overlay" id="revAiOverlay">
+        <div class="rev-ai-orb">
+          <div class="rev-orbit rev-orbit-1"></div>
+          <div class="rev-orbit rev-orbit-2"></div>
+          <div class="rev-orbit rev-orbit-3"></div>
+          <div class="rev-ai-ring-pulse"></div>
+          <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
+          <button class="rev-ai-btn" id="revAiBtn">
+            <svg id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            <svg id="revStopIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+          </button>
         </div>
+        <div class="rev-ai-label" id="revAiLabel">
+          <span class="rev-ai-label-text">TALK TO REV</span>
+          <span class="rev-ai-label-sub">AI Recruiter — Tap to Talk</span>
+        </div>
+        <div class="rev-ai-status-text" id="revStatusText" style="display:none"></div>
       </div>
     </div>
   </div>
@@ -659,11 +675,11 @@ window.addEventListener('scroll', () => {
         else p.classList.remove('active');
       });
 
-      // Show Rev label only during Phase 1
-      var revLbl = document.getElementById('revLabelWrapper');
-      if (revLbl) {
-        if (activePhase === 0 && progress < 0.3) revLbl.classList.add('visible');
-        else revLbl.classList.remove('visible');
+      // Show Rev AI only during Phase 1
+      var revOv = document.getElementById('revAiOverlay');
+      if (revOv) {
+        if (activePhase === 0 && progress < 0.3) revOv.classList.add('visible');
+        else revOv.classList.remove('visible');
       }
 
       // Update video frame based on sticky progress
@@ -822,55 +838,97 @@ if (glitchEl) {
 }
 
 // ═══ VAPI VOICE — "Talk to Rev" ═══
-// Show label with delay
+var vapiInstance = null;
+var revCallActive = false;
+var ASSISTANT_ID = '935aee34-06a0-4c89-8d95-ff273472ce36';
+var PUBLIC_KEY = '4edef663-d30f-4a4b-bdc7-12d58630d2cf';
+
+var revBtn = document.getElementById('revAiBtn');
+var revLabel = document.getElementById('revAiLabel');
+var revStatusText = document.getElementById('revStatusText');
+var revMicIcon = document.getElementById('revMicIcon');
+var revStopIcon = document.getElementById('revStopIcon');
+
+// Show overlay after delay
 setTimeout(function() {
-  var lbl = document.getElementById('revLabelWrapper');
-  if (lbl) lbl.classList.add('visible');
+  var ov = document.getElementById('revAiOverlay');
+  if (ov) ov.classList.add('visible');
 }, 1200);
 
-// Load Vapi SDK — their button works natively, we just restyle it with CSS
+// Button click handler
+revBtn.addEventListener('click', function() {
+  if (!vapiInstance) {
+    revStatusText.style.display = 'block';
+    revStatusText.textContent = 'LOADING...';
+    return;
+  }
+  if (revCallActive) {
+    vapiInstance.stop();
+  } else {
+    revBtn.classList.add('connecting');
+    revLabel.style.display = 'none';
+    revStatusText.style.display = 'block';
+    revStatusText.textContent = 'CONNECTING...';
+    vapiInstance.start(ASSISTANT_ID);
+  }
+});
+
+// Load SDK
 (function (d, t) {
-  var g = document.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-  g.src = "vapi-sdk.js";
+  var g = document.createElement(t);
+  var s = d.getElementsByTagName(t)[0];
+  g.src = 'vapi-sdk.js';
   g.defer = true;
   g.async = true;
   s.parentNode.insertBefore(g, s);
+
   g.onload = function () {
-    window.vapiSDK.run({
-      apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
-      assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
-      config: {
-        position: "bottom-right",
-        offset: "32px",
-        width: "80px",
-        height: "80px",
-        idle: {
-          color: "rgb(26, 10, 46)",
-          type: "pill",
-          title: "Talk to Rev",
-          subtitle: "AI Recruiter",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg",
-        },
-        loading: {
-          color: "rgb(76, 29, 149)",
-          type: "pill",
-          title: "Connecting...",
-          subtitle: "One moment",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg",
-        },
-        active: {
-          color: "rgb(124, 58, 237)",
-          type: "pill",
-          title: "Live with Rev",
-          subtitle: "Tap to end",
-          icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg",
-        },
-      },
+    // Key fix: use `assistant` not `assistantId`
+    vapiInstance = window.vapiSDK.run({
+      apiKey: PUBLIC_KEY,
+      assistant: ASSISTANT_ID,
+      config: {}
     });
-    console.log('[Vapi] Ready');
+
+    vapiInstance.on('call-start', function() {
+      revCallActive = true;
+      revBtn.classList.remove('connecting');
+      revBtn.classList.add('active');
+      revMicIcon.style.display = 'none';
+      revStopIcon.style.display = 'block';
+      revStatusText.textContent = 'LIVE WITH REV';
+    });
+
+    vapiInstance.on('call-end', function() {
+      revCallActive = false;
+      revBtn.classList.remove('active', 'connecting');
+      revMicIcon.style.display = 'block';
+      revStopIcon.style.display = 'none';
+      revLabel.style.display = 'block';
+      revStatusText.style.display = 'none';
+    });
+
+    vapiInstance.on('speech-start', function() {
+      revStatusText.textContent = 'REV IS TALKING...';
+    });
+
+    vapiInstance.on('speech-end', function() {
+      revStatusText.textContent = 'LISTENING...';
+    });
+
+    vapiInstance.on('error', function(e) {
+      console.error('[Vapi]', e);
+      revCallActive = false;
+      revBtn.classList.remove('active', 'connecting');
+      revMicIcon.style.display = 'block';
+      revStopIcon.style.display = 'none';
+      revLabel.style.display = 'block';
+      revStatusText.style.display = 'none';
+    });
+
+    console.log('[Vapi] SDK ready — custom button wired');
   };
-})(document, "script");
+})(document, 'script');
 </script>
 </body>
 </html>
