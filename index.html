@@ -855,90 +855,82 @@ if (glitchEl) {
 }
 
 // ═══ VAPI VOICE — "Talk to Rev" (embedded in hero) ═══
-let vapiInstance = null;
-let revCallActive = false;
+var vapiInstance = null;
+var revCallActive = false;
+var revBtn = document.getElementById('revAiBtn');
+var revLabel = document.getElementById('revAiLabel');
+var revStatus = document.getElementById('revAiStatus');
+var revStatusText = document.getElementById('revStatusText');
+var revMicIcon = document.getElementById('revMicIcon');
+var revPhoneIcon = document.getElementById('revPhoneIcon');
 
 function toggleRevCall() {
-  if (revCallActive && vapiInstance) {
+  if (!vapiInstance) {
+    console.log('[Vapi] SDK not loaded yet');
+    return;
+  }
+  if (revCallActive) {
     vapiInstance.stop();
-    return;
-  }
-  // If SDK loaded, start the call
-  if (vapiInstance) {
+  } else {
+    revBtn.classList.add('active');
+    revLabel.style.display = 'none';
+    revStatus.style.display = 'block';
+    revStatusText.textContent = 'Connecting...';
     vapiInstance.start("935aee34-06a0-4c89-8d95-ff273472ce36");
-    return;
   }
-  // Fallback: if SDK not loaded yet, show loading state
-  var btn = document.getElementById('revAiBtn');
-  btn.classList.add('active');
 }
 
-// Show rev overlay after a brief delay for dramatic entrance
+// Show rev overlay after a brief delay
 setTimeout(function() {
   var overlay = document.getElementById('revAiOverlay');
   if (overlay) overlay.classList.add('visible');
 }, 1200);
 
-(function (d, t) {
-  var g = document.createElement(t),
-      s = d.getElementsByTagName(t)[0];
-  g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-  g.defer = true;
-  g.async = true;
-  s.parentNode.insertBefore(g, s);
+// Load Vapi Web SDK
+var vapiScript = document.createElement('script');
+vapiScript.src = 'https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/vapi.umd.min.js';
+vapiScript.async = true;
+vapiScript.onload = function() {
+  vapiInstance = new window.Vapi("4edef663-d30f-4a4b-bdc7-12d58630d2cf");
 
-  g.onload = function () {
-    vapiInstance = window.vapiSDK.run({
-      apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
-      assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
-      config: {
-        position: "bottom-right",
-        offset: "40px",
-        width: "1px",
-        height: "1px",
-        idle: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
-        loading: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
-        active: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
-      },
-    });
+  vapiInstance.on('call-start', function() {
+    revCallActive = true;
+    revBtn.classList.add('active');
+    revLabel.style.display = 'none';
+    revStatus.style.display = 'block';
+    revStatusText.textContent = 'Connected';
+    revMicIcon.style.display = 'none';
+    revPhoneIcon.style.display = 'block';
+  });
 
-    var btn = document.getElementById('revAiBtn');
-    var label = document.getElementById('revAiLabel');
-    var status = document.getElementById('revAiStatus');
-    var statusText = document.getElementById('revStatusText');
-    var micIcon = document.getElementById('revMicIcon');
-    var phoneIcon = document.getElementById('revPhoneIcon');
+  vapiInstance.on('call-end', function() {
+    revCallActive = false;
+    revBtn.classList.remove('active');
+    revLabel.style.display = 'block';
+    revStatus.style.display = 'none';
+    revMicIcon.style.display = 'block';
+    revPhoneIcon.style.display = 'none';
+  });
 
-    vapiInstance.on('call-start', function() {
-      revCallActive = true;
-      btn.classList.add('active');
-      label.style.display = 'none';
-      status.style.display = 'block';
-      statusText.textContent = 'Connected';
-      micIcon.style.display = 'none';
-      phoneIcon.style.display = 'block';
-    });
+  vapiInstance.on('speech-start', function() {
+    revStatusText.textContent = 'Rev is talking...';
+  });
 
-    vapiInstance.on('call-end', function() {
-      revCallActive = false;
-      btn.classList.remove('active');
-      label.style.display = 'block';
-      status.style.display = 'none';
-      micIcon.style.display = 'block';
-      phoneIcon.style.display = 'none';
-    });
+  vapiInstance.on('speech-end', function() {
+    revStatusText.textContent = 'Listening...';
+  });
 
-    vapiInstance.on('speech-start', function() {
-      statusText.textContent = 'Rev is talking...';
-    });
+  vapiInstance.on('error', function(err) {
+    console.error('[Vapi] Error:', err);
+    revCallActive = false;
+    revBtn.classList.remove('active');
+    revLabel.style.display = 'block';
+    revStatus.style.display = 'none';
+  });
 
-    vapiInstance.on('speech-end', function() {
-      statusText.textContent = 'Listening...';
-    });
-
-    console.log('[Vapi] SDK loaded, assistant ready');
-  };
-})(document, "script");
+  console.log('[Vapi] Web SDK loaded, ready');
+};
+document.head.appendChild(vapiScript);
 </script>
 </body>
 </html>
