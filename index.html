@@ -123,8 +123,8 @@ section{position:relative;z-index:2}
 
 /* ═══ REV AI — CUSTOM BUTTON + HIDDEN VAPI DEFAULT ═══ */
 .vapi-btn{display:none!important}
-.rev-ai-overlay{position:absolute;right:14%;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:auto;opacity:0;transition:opacity 0.8s ease}
-.rev-ai-overlay.visible{opacity:1}
+.rev-ai-overlay{position:absolute;right:14%;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:auto;opacity:1;transition:opacity 0.8s ease}
+.rev-ai-overlay.hidden{opacity:0;pointer-events:none}
 .rev-ai-orb{position:relative;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
 .rev-orbit{position:absolute;border-radius:50%;border:1px solid transparent}
 .rev-orbit-1{inset:-20px;border-color:rgba(124,58,237,0.15);animation:rev-spin 12s linear infinite}
@@ -675,11 +675,11 @@ window.addEventListener('scroll', () => {
         else p.classList.remove('active');
       });
 
-      // Show Rev AI only during Phase 1
+      // Hide Rev AI when scrolled past Phase 1
       var revOv = document.getElementById('revAiOverlay');
       if (revOv) {
-        if (activePhase === 0 && progress < 0.3) revOv.classList.add('visible');
-        else revOv.classList.remove('visible');
+        if (activePhase === 0 && progress < 0.3) revOv.classList.remove('hidden');
+        else revOv.classList.add('hidden');
       }
 
       // Update video frame based on sticky progress
@@ -848,12 +848,6 @@ var revLabel = document.getElementById('revAiLabel');
 var revStatusText = document.getElementById('revStatusText');
 var revMicIcon = document.getElementById('revMicIcon');
 var revStopIcon = document.getElementById('revStopIcon');
-
-// Show overlay after delay
-setTimeout(function() {
-  var ov = document.getElementById('revAiOverlay');
-  if (ov) ov.classList.add('visible');
-}, 1200);
 
 // Button click handler
 revBtn.addEventListener('click', function() {
