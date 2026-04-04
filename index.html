@@ -122,29 +122,46 @@ section{position:relative;z-index:2}
 .big-statement span{background:linear-gradient(135deg,var(--purple-light),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ═══ REV AI OVERLAY ═══ */
-.rev-ai-overlay{position:absolute;right:12%;bottom:22%;z-index:6;display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:auto}
-.rev-ai-ring{position:relative;width:80px;height:80px;display:flex;align-items:center;justify-content:center}
-.rev-ai-ring-pulse{position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(124,58,237,0.4);animation:rev-pulse-ring 2s ease-in-out infinite}
-.rev-ai-ring-pulse-2{animation-delay:1s}
-@keyframes rev-pulse-ring{0%{transform:scale(1);opacity:0.6}50%{transform:scale(1.3);opacity:0}100%{transform:scale(1);opacity:0}}
-.rev-ai-btn{width:64px;height:64px;border-radius:50%;background:rgba(124,58,237,0.2);border:2px solid rgba(124,58,237,0.6);color:#a855f7;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.rev-ai-btn:hover{background:rgba(124,58,237,0.4);border-color:var(--purple-light);box-shadow:0 0 30px rgba(124,58,237,0.5);transform:scale(1.08)}
-.rev-ai-btn svg{width:26px;height:26px}
-.rev-ai-btn.active{background:rgba(124,58,237,0.6);border-color:#c084fc;box-shadow:0 0 40px rgba(124,58,237,0.7);animation:rev-btn-glow 1.5s ease-in-out infinite}
-@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 30px rgba(124,58,237,0.5)}50%{box-shadow:0 0 50px rgba(124,58,237,0.9)}}
+.rev-ai-overlay{position:absolute;left:80px;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:20px;pointer-events:auto;opacity:0;transition:opacity 0.8s ease}
+.rev-ai-overlay.visible{opacity:1}
+/* Outer orbit rings */
+.rev-ai-orb{position:relative;width:140px;height:140px;display:flex;align-items:center;justify-content:center}
+.rev-orbit{position:absolute;border-radius:50%;border:1px solid transparent;animation-timing-function:linear;animation-iteration-count:infinite}
+.rev-orbit-1{inset:-20px;border-color:rgba(124,58,237,0.15);animation:rev-spin 12s linear infinite}
+.rev-orbit-2{inset:-35px;border-color:rgba(168,85,247,0.08);animation:rev-spin 20s linear infinite reverse}
+.rev-orbit-3{inset:-50px;border-color:rgba(124,58,237,0.05);animation:rev-spin 30s linear infinite}
+/* Orbit dots */
+.rev-orbit-1::after{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;background:var(--purple-light);border-radius:50%;box-shadow:0 0 12px var(--purple-light)}
+.rev-orbit-2::after{content:'';position:absolute;bottom:-2px;right:20%;width:4px;height:4px;background:rgba(168,85,247,0.6);border-radius:50%;box-shadow:0 0 8px rgba(168,85,247,0.4)}
+.rev-orbit-3::after{content:'';position:absolute;top:30%;left:-2px;width:3px;height:3px;background:rgba(124,58,237,0.4);border-radius:50%;box-shadow:0 0 6px rgba(124,58,237,0.3)}
+@keyframes rev-spin{to{transform:rotate(360deg)}}
+/* Pulse rings */
+.rev-ai-ring-pulse{position:absolute;inset:-8px;border-radius:50%;border:1.5px solid rgba(124,58,237,0.3);animation:rev-pulse-ring 3s ease-out infinite}
+.rev-ai-ring-pulse-2{animation-delay:1.5s}
+@keyframes rev-pulse-ring{0%{transform:scale(1);opacity:0.6}100%{transform:scale(1.8);opacity:0}}
+/* Main button */
+.rev-ai-btn{width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.25),rgba(124,58,237,0.1) 60%,rgba(6,6,10,0.6));border:2px solid rgba(124,58,237,0.5);color:#c084fc;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 0 30px rgba(124,58,237,0.2),inset 0 1px 0 rgba(255,255,255,0.08)}
+.rev-ai-btn:hover{background:radial-gradient(circle at 40% 35%,rgba(168,85,247,0.4),rgba(124,58,237,0.2) 60%,rgba(6,6,10,0.4));border-color:var(--purple-light);box-shadow:0 0 50px rgba(124,58,237,0.4),0 0 100px rgba(124,58,237,0.15),inset 0 1px 0 rgba(255,255,255,0.12);transform:scale(1.06)}
+.rev-ai-btn svg{width:36px;height:36px;filter:drop-shadow(0 0 8px rgba(168,85,247,0.6))}
+.rev-ai-btn.active{background:radial-gradient(circle at 50% 50%,rgba(124,58,237,0.5),rgba(76,29,149,0.3));border-color:#c084fc;box-shadow:0 0 60px rgba(124,58,237,0.6),0 0 120px rgba(124,58,237,0.2);animation:rev-btn-glow 2s ease-in-out infinite}
+@keyframes rev-btn-glow{0%,100%{box-shadow:0 0 40px rgba(124,58,237,0.4),0 0 80px rgba(124,58,237,0.1)}50%{box-shadow:0 0 60px rgba(124,58,237,0.7),0 0 120px rgba(124,58,237,0.25)}}
+/* Label */
 .rev-ai-label{text-align:center}
-.rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 20px rgba(124,58,237,0.5)}
-.rev-ai-label-sub{display:block;font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-top:4px}
+.rev-ai-label-text{display:block;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 30px rgba(124,58,237,0.5)}
+.rev-ai-label-sub{display:block;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-top:6px}
+/* Status during call */
 .rev-ai-status{text-align:center}
-.rev-ai-visualizer{display:flex;gap:3px;justify-content:center;align-items:center;height:24px;margin-bottom:6px}
-.rev-ai-visualizer span{width:3px;background:var(--purple-light);border-radius:2px;animation:rev-bar 0.8s ease-in-out infinite}
-.rev-ai-visualizer span:nth-child(1){height:8px;animation-delay:0s}
-.rev-ai-visualizer span:nth-child(2){height:16px;animation-delay:0.1s}
-.rev-ai-visualizer span:nth-child(3){height:22px;animation-delay:0.2s}
-.rev-ai-visualizer span:nth-child(4){height:14px;animation-delay:0.3s}
-.rev-ai-visualizer span:nth-child(5){height:10px;animation-delay:0.4s}
-@keyframes rev-bar{0%,100%{transform:scaleY(0.4);opacity:0.5}50%{transform:scaleY(1);opacity:1}}
-.rev-ai-status-text{font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--purple-light)}
+.rev-ai-visualizer{display:flex;gap:4px;justify-content:center;align-items:center;height:32px;margin-bottom:8px}
+.rev-ai-visualizer span{width:4px;background:linear-gradient(180deg,var(--purple-light),rgba(124,58,237,0.3));border-radius:3px;animation:rev-bar 0.8s ease-in-out infinite}
+.rev-ai-visualizer span:nth-child(1){height:10px;animation-delay:0s}
+.rev-ai-visualizer span:nth-child(2){height:20px;animation-delay:0.1s}
+.rev-ai-visualizer span:nth-child(3){height:28px;animation-delay:0.15s}
+.rev-ai-visualizer span:nth-child(4){height:22px;animation-delay:0.25s}
+.rev-ai-visualizer span:nth-child(5){height:14px;animation-delay:0.35s}
+.rev-ai-visualizer span:nth-child(6){height:18px;animation-delay:0.45s}
+.rev-ai-visualizer span:nth-child(7){height:8px;animation-delay:0.5s}
+@keyframes rev-bar{0%,100%{transform:scaleY(0.3);opacity:0.4}50%{transform:scaleY(1);opacity:1}}
+.rev-ai-status-text{font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);text-shadow:0 0 15px rgba(124,58,237,0.4)}
 
 /* ═══ TYPEWRITER ═══ */
 .typewriter{border-right:3px solid var(--purple-light);animation:blink 0.8s step-end infinite;display:inline;white-space:normal}
@@ -297,10 +314,12 @@ footer ul a:hover{color:var(--purple-light)}
   nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(6,6,10,0.95)}
   .tech-card,.compare-col,.culture-card{backdrop-filter:none;-webkit-backdrop-filter:none}
   .sticky-viewport{background:linear-gradient(135deg,#0a0015 0%,#1a0a2e 30%,#0d0520 60%,#06060a 100%)}
-  .rev-ai-overlay{right:50%;bottom:12%;transform:translateX(50%)}
-  .rev-ai-btn{width:56px;height:56px}
-  .rev-ai-btn svg{width:22px;height:22px}
-  .rev-ai-label-text{font-size:0.6rem;letter-spacing:3px}
+  .rev-ai-overlay{left:50%;top:auto;bottom:15%;transform:translateX(-50%) translateY(0)}
+  .rev-ai-orb{width:100px;height:100px}
+  .rev-ai-btn{width:72px;height:72px}
+  .rev-ai-btn svg{width:28px;height:28px}
+  .rev-orbit-1{inset:-12px}.rev-orbit-2{inset:-22px}.rev-orbit-3{display:none}
+  .rev-ai-label-text{font-size:0.75rem;letter-spacing:4px}
 }
 @media(max-width:400px){
   .glitch{font-size:1.6rem!important}
@@ -374,12 +393,15 @@ footer ul a:hover{color:var(--purple-light)}
       </div>
       <!-- Talk to Rev — interactive AI overlay -->
       <div class="rev-ai-overlay" id="revAiOverlay">
-        <div class="rev-ai-ring" id="revRing">
+        <div class="rev-ai-orb">
+          <div class="rev-orbit rev-orbit-1"></div>
+          <div class="rev-orbit rev-orbit-2"></div>
+          <div class="rev-orbit rev-orbit-3"></div>
           <div class="rev-ai-ring-pulse"></div>
           <div class="rev-ai-ring-pulse rev-ai-ring-pulse-2"></div>
           <button class="rev-ai-btn" id="revAiBtn" onclick="toggleRevCall()">
             <svg class="rev-mic-icon" id="revMicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-            <svg class="rev-phone-icon" id="revPhoneIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 2.59 3.4z"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            <svg class="rev-phone-icon" id="revPhoneIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.5 15.5l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.86.53 2.81.7a2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-6-6A19.79 19.79 0 0 1 4.53 3.82 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.17.95.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91"/></svg>
           </button>
         </div>
         <div class="rev-ai-label" id="revAiLabel">
@@ -388,7 +410,7 @@ footer ul a:hover{color:var(--purple-light)}
         </div>
         <div class="rev-ai-status" id="revAiStatus" style="display:none">
           <div class="rev-ai-visualizer" id="revVisualizer">
-            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
           <span class="rev-ai-status-text" id="revStatusText">Listening...</span>
         </div>
@@ -830,13 +852,25 @@ let vapiInstance = null;
 let revCallActive = false;
 
 function toggleRevCall() {
-  if (!vapiInstance) return;
-  if (revCallActive) {
+  if (revCallActive && vapiInstance) {
     vapiInstance.stop();
-  } else {
-    vapiInstance.start("935aee34-06a0-4c89-8d95-ff273472ce36");
+    return;
   }
+  // If SDK loaded, start the call
+  if (vapiInstance) {
+    vapiInstance.start("935aee34-06a0-4c89-8d95-ff273472ce36");
+    return;
+  }
+  // Fallback: if SDK not loaded yet, show loading state
+  var btn = document.getElementById('revAiBtn');
+  btn.classList.add('active');
 }
+
+// Show rev overlay after a brief delay for dramatic entrance
+setTimeout(function() {
+  var overlay = document.getElementById('revAiOverlay');
+  if (overlay) overlay.classList.add('visible');
+}, 1200);
 
 (function (d, t) {
   var g = document.createElement(t),
@@ -849,25 +883,24 @@ function toggleRevCall() {
   g.onload = function () {
     vapiInstance = window.vapiSDK.run({
       apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
-      assistant: undefined,
+      assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
       config: {
-        hide: true,
         position: "bottom-right",
         offset: "40px",
-        width: "50px",
-        height: "50px",
-        idle: { color: "rgb(26, 10, 46)", type: "round", title: "", subtitle: "", icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg" },
-        loading: { color: "rgb(76, 29, 149)", type: "round", title: "", subtitle: "" },
-        active: { color: "rgb(124, 58, 237)", type: "round", title: "", subtitle: "" },
+        width: "1px",
+        height: "1px",
+        idle: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
+        loading: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
+        active: { color: "rgba(0,0,0,0)", type: "round", title: "", subtitle: "" },
       },
     });
 
-    const btn = document.getElementById('revAiBtn');
-    const label = document.getElementById('revAiLabel');
-    const status = document.getElementById('revAiStatus');
-    const statusText = document.getElementById('revStatusText');
-    const micIcon = document.getElementById('revMicIcon');
-    const phoneIcon = document.getElementById('revPhoneIcon');
+    var btn = document.getElementById('revAiBtn');
+    var label = document.getElementById('revAiLabel');
+    var status = document.getElementById('revAiStatus');
+    var statusText = document.getElementById('revStatusText');
+    var micIcon = document.getElementById('revMicIcon');
+    var phoneIcon = document.getElementById('revPhoneIcon');
 
     vapiInstance.on('call-start', function() {
       revCallActive = true;
@@ -895,6 +928,8 @@ function toggleRevCall() {
     vapiInstance.on('speech-end', function() {
       statusText.textContent = 'Listening...';
     });
+
+    console.log('[Vapi] SDK loaded, assistant ready');
   };
 })(document, "script");
 </script>
