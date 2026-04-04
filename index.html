@@ -774,6 +774,59 @@ if (glitchEl) {
   }
   setTimeout(typeNext, 800);
 }
+
+// ═══ VAPI VOICE WIDGET — "Talk to Rev" ═══
+(function (d, t) {
+  var g = document.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+  g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+  g.defer = true;
+  g.async = true;
+  s.parentNode.insertBefore(g, s);
+
+  g.onload = function () {
+    window.vapiSDK.run({
+      apiKey: "4edef663-d30f-4a4b-bdc7-12d58630d2cf",
+      assistantId: "935aee34-06a0-4c89-8d95-ff273472ce36",
+      config: {
+        position: "bottom-right",
+        offset: "32px",
+        width: "60px",
+        height: "60px",
+        idle: {
+          color: "rgb(26, 10, 46)",
+          type: "pill",
+          title: "Talk to Rev",
+          subtitle: "AI Recruiter",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic.svg",
+        },
+        loading: {
+          color: "rgb(76, 29, 149)",
+          type: "pill",
+          title: "Connecting...",
+          subtitle: "One second",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg",
+        },
+        active: {
+          color: "rgb(124, 58, 237)",
+          type: "pill",
+          title: "Live with Rev",
+          subtitle: "Tap to end",
+          icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg",
+        },
+      },
+    });
+  };
+})(document, "script");
 </script>
+
+<style>
+/* Vapi button glow */
+.vapi-btn{box-shadow:0 0 24px rgba(124,58,237,0.45)!important;transition:box-shadow 0.3s ease!important}
+.vapi-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.7)!important}
+.vapi-btn-is-active{background:rgb(124,58,237)!important}
+.vapi-btn-is-speaking{box-shadow:0 0 40px rgba(124,58,237,1.0)!important;animation:vapi-pulse 1.2s ease-in-out infinite}
+@keyframes vapi-pulse{0%,100%{box-shadow:0 0 24px rgba(124,58,237,0.6)}50%{box-shadow:0 0 48px rgba(124,58,237,1.0)}}
+</style>
 </body>
 </html>
