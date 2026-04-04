@@ -695,6 +695,13 @@ window.addEventListener('scroll', () => {
         else p.classList.remove('active');
       });
 
+      // Show Rev AI overlay only during Phase 1
+      var revOverlay = document.getElementById('revAiOverlay');
+      if (revOverlay) {
+        if (activePhase === 0 && progress < 0.3) revOverlay.classList.add('visible');
+        else revOverlay.classList.remove('visible');
+      }
+
       // Update video frame based on sticky progress
       if (fLoaded > 0) {
         const frameIndex = Math.min(Math.floor(progress * (fLoaded - 1)), fLoaded - 1);
