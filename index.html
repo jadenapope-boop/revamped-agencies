@@ -937,6 +937,19 @@ if (refCode) {
   document.getElementById('refCodeInput').value = refCode;
   // Store in sessionStorage so it persists across page interactions
   sessionStorage.setItem('revamped_ref', refCode);
+  // Track page view for this ref code (fire-and-forget, once per session)
+  if (!sessionStorage.getItem('revamped_viewed')) {
+    sessionStorage.setItem('revamped_viewed', '1');
+    fetch('https://hcmtozxbfcrmlicncnhr.supabase.co/rest/v1/website_page_views', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjbXRvenhmY3JtbGljbmNuaHIiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc0MjUyNjcwMiwiZXhwIjoyMDU4MTAyNzAyfQ.VJaOGJMSRJf43v2OPSlRiAe8P6MO0gLTXKvSrZ7BoYM',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ ref_code: refCode })
+    }).catch(function() {});
+  }
 } else {
   var stored = sessionStorage.getItem('revamped_ref');
   if (stored) {
