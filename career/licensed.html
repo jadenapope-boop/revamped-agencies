@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Revamped Agencies — Licensed Agent Application</title>
+<meta name="description" content="Licensed life insurance agent? Apply to join Revamped Agencies. 80-100% starting contracts, vested renewals Day 1, no fees.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{overscroll-behavior:none;background:#06060a;color:rgba(255,255,255,0.92);font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+:root{
+  --purple:#7c3aed;--purple-light:#a855f7;--purple-dark:#6d28d9;--purple-glow:rgba(168,85,247,0.5);
+  --bg:#06060a;--bg-card:rgba(255,255,255,0.03);
+  --border:rgba(147,51,234,0.18);--border-strong:rgba(168,85,247,0.4);
+  --text:rgba(255,255,255,0.92);--text-dim:rgba(255,255,255,0.55);--text-muted:rgba(255,255,255,0.32);
+  --error:#f87171;
+}
+
+body{
+  background:radial-gradient(ellipse at top, rgba(124,58,237,0.08) 0%, transparent 50%), #06060a;
+  background-attachment:fixed;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.app{
+  width:100%;
+  max-width:480px;
+  margin:0 auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 24px;
+  border-bottom:1px solid var(--border);
+  background:rgba(6,6,10,0.85);
+  backdrop-filter:blur(20px);
+  position:sticky;top:0;z-index:10;
+}
+.logo{
+  font-family:'Oswald',sans-serif;
+  font-size:0.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--text);
+}
+.logo span{color:var(--purple-light)}
+.topbar-right{
+  font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+.main{
+  flex:1;
+  display:flex;flex-direction:column;
+  padding:32px 24px 100px;
+  position:relative;
+}
+
+.stepbar{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:center;
+  padding:16px 24px 24px;
+  background:linear-gradient(180deg, transparent, rgba(6,6,10,0.95) 30%);
+  z-index:5;pointer-events:none;
+}
+.stepbar-inner{
+  width:100%;max-width:480px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.step-dots{display:flex;gap:6px}
+.step-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,0.12);transition:all 0.4s;
+}
+.step-dot.active{background:var(--purple-light);box-shadow:0 0 8px var(--purple-glow)}
+.step-dot.complete{background:rgba(168,85,247,0.4)}
+.step-text{
+  font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+.screen{
+  display:none;flex-direction:column;flex:1;
+  animation:slideIn 0.16s cubic-bezier(0.16,1,0.3,1);
+  will-change:opacity, transform;
+}
+.screen.active{display:flex}
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.q-eyebrow{
+  font-size:0.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--purple-light);margin-bottom:14px;
+}
+.q-title{
+  font-family:'Oswald',sans-serif;
+  font-size:1.65rem;font-weight:700;line-height:1.2;letter-spacing:-0.01em;
+  margin-bottom:10px;
+}
+.q-sub{font-size:0.85rem;color:var(--text-dim);margin-bottom:32px;line-height:1.5}
+
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:block;padding:18px 20px;
+  background:var(--bg-card);
+  border:1.5px solid rgba(255,255,255,0.06);
+  border-radius:10px;
+  font-size:0.95rem;font-weight:500;color:var(--text);
+  cursor:pointer;transition:transform 0.06s, background 0.06s, border-color 0.06s;
+  position:relative;text-align:left;line-height:1.4;
+  width:100%;font-family:inherit;
+}
+.opt:hover, .opt:focus{
+  border-color:var(--border-strong);
+  background:rgba(124,58,237,0.06);
+}
+.opt:active{transform:scale(0.985)}
+.opt-letter{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;
+  border:1.5px solid rgba(255,255,255,0.2);
+  border-radius:6px;margin-right:14px;
+  font-size:0.7rem;font-weight:700;color:var(--text-muted);
+  transition:all 0.2s;vertical-align:middle;
+}
+.opt.selected{
+  border-color:var(--purple-light);
+  background:rgba(124,58,237,0.12);
+  box-shadow:0 0 0 1px var(--purple-light), 0 0 24px rgba(124,58,237,0.2);
+}
+.opt.selected .opt-letter{
+  background:var(--purple-light);border-color:var(--purple-light);color:#fff;
+}
+
+.text-input{
+  width:100%;padding:18px 20px;
+  background:var(--bg-card);
+  border:1.5px solid rgba(255,255,255,0.06);
+  border-radius:10px;
+  font-size:1rem;font-family:inherit;color:var(--text);
+  transition:all 0.2s;
+}
+.text-input::placeholder{color:var(--text-muted)}
+.text-input:focus{
+  outline:none;border-color:var(--purple-light);
+  background:rgba(124,58,237,0.06);
+  box-shadow:0 0 0 1px var(--purple-light);
+}
+.field-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.field-label{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.5px;
+  color:var(--text-dim);
+  margin-bottom:-4px;margin-top:4px;
+}
+
+.micro{font-size:0.75rem;color:var(--text-muted);margin-top:10px;line-height:1.5}
+.error-msg{
+  font-size:0.78rem;color:var(--error);
+  margin-top:10px;line-height:1.5;
+  padding:10px 14px;
+  background:rgba(248,113,113,0.06);
+  border:1px solid rgba(248,113,113,0.2);
+  border-radius:8px;
+  display:none;
+}
+.error-msg.visible{display:block}
+
+.btn-primary{
+  display:block;width:100%;
+  padding:18px 24px;
+  background:linear-gradient(135deg, var(--purple), var(--purple-dark));
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Oswald',sans-serif;
+  font-size:0.85rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.3s;margin-top:32px;
+  box-shadow:0 0 30px rgba(124,58,237,0.3);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 40px rgba(124,58,237,0.5);
+}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+.success-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(135deg, var(--purple), var(--purple-light));
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  box-shadow:0 0 40px var(--purple-glow);
+  animation:pulse 2s ease-in-out infinite;
+}
+.success-icon svg{width:32px;height:32px;stroke:#fff;stroke-width:3;fill:none}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 40px var(--purple-glow)}
+  50%{box-shadow:0 0 60px rgba(168,85,247,0.7)}
+}
+.success-title{
+  font-family:'Oswald',sans-serif;
+  font-size:1.8rem;font-weight:800;line-height:1.15;margin-bottom:14px;
+}
+.success-sub{
+  font-size:0.92rem;color:var(--text-dim);margin-bottom:28px;line-height:1.6;
+}
+
+.hidden{display:none !important}
+
+/* HERO */
+.hero-screen{
+  display:none;flex-direction:column;flex:1;
+  position:relative;min-height:calc(100vh - 60px);padding:0;overflow:hidden;
+}
+.hero-screen.active{display:flex}
+.hero-orb{
+  position:absolute;top:20%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle, rgba(168,85,247,0.35) 0%, rgba(124,58,237,0.15) 30%, transparent 65%);
+  filter:blur(40px);z-index:0;
+  animation:orbDrift 12s ease-in-out infinite;pointer-events:none;
+}
+.hero-orb-2{
+  position:absolute;bottom:10%;right:-10%;
+  width:400px;height:400px;
+  background:radial-gradient(circle, rgba(108,91,212,0.25) 0%, transparent 60%);
+  filter:blur(30px);z-index:0;
+  animation:orbDrift2 14s ease-in-out infinite;pointer-events:none;
+}
+@keyframes orbDrift{
+  0%,100%{transform:translate(-50%,-50%) scale(1)}
+  50%{transform:translate(-40%,-55%) scale(1.1)}
+}
+@keyframes orbDrift2{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-20px,-30px) scale(1.15)}
+}
+.hero-noise{
+  position:absolute;inset:0;opacity:0.03;z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;z-index:3;flex:1;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:32px 24px 40px;
+  min-height:calc(100vh - 100px);
+}
+
+.hero-eyebrow-2{
+  display:inline-block;
+  font-size:0.58rem;font-weight:700;letter-spacing:5px;text-transform:uppercase;
+  color:var(--purple-light);
+  border:1px solid rgba(168,85,247,0.4);
+  padding:8px 18px;margin-bottom:32px;
+  background:rgba(168,85,247,0.05);
+  backdrop-filter:blur(8px);
+  animation:fadeInDown 0.8s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+@keyframes fadeInDown{
+  from{opacity:0;transform:translateY(-12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.hero-h1{
+  font-family:'Oswald',sans-serif;
+  font-size:clamp(1.8rem, 7vw, 2.4rem);font-weight:700;line-height:1.05;letter-spacing:-0.01em;text-transform:uppercase;
+  color:rgba(255,255,255,0.96);margin-bottom:8px;
+  animation:fadeUp 0.8s 0.1s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+.hero-h1-line{display:block}
+.hero-h1-thin{font-weight:300;color:var(--text-dim);font-size:0.85em}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);filter:blur(10px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+
+.hero-subline{
+  font-size:0.92rem;line-height:1.6;color:var(--text-dim);
+  max-width:340px;margin:0 auto 36px;
+  animation:fadeUp 0.8s 0.3s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+.hero-subline strong{color:var(--text);font-weight:600}
+
+.hero-pillars{
+  display:flex;align-items:center;justify-content:center;gap:0;
+  margin:28px 0 32px;
+  width:100%;max-width:380px;
+  animation:fadeUp 0.8s 0.2s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+.hero-pillar{flex:1;text-align:center;padding:0 8px}
+.hero-pillar-num{
+  font-family:'Oswald',sans-serif;
+  font-size:clamp(1.6rem, 7vw, 2rem);font-weight:700;line-height:1;letter-spacing:-0.02em;
+  background:linear-gradient(135deg, #a855f7 0%, #c084fc 50%, #e9d5ff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:8px;text-shadow:0 0 30px rgba(168,85,247,0.25);
+}
+.hero-pillar-pct{font-size:0.65em;font-weight:600;margin-left:1px}
+.hero-pillar-num-range{
+  font-size:clamp(1.05rem, 4.6vw, 1.35rem);
+  white-space:nowrap;letter-spacing:-0.01em;
+}
+.hero-pillar-cap{
+  font-family:'Oswald',sans-serif;
+  font-size:0.62rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-dim);line-height:1.3;
+}
+.hero-pillar-divider{
+  width:1px;height:48px;
+  background:linear-gradient(180deg, transparent, rgba(168,85,247,0.3), transparent);
+  flex-shrink:0;
+}
+
+.hero-cta-wrap{
+  position:relative;display:inline-block;
+  width:100%;max-width:340px;
+  animation:fadeUp 0.8s 0.5s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+.hero-cta-border{
+  position:absolute;inset:-2px;border-radius:12px;
+  background:conic-gradient(from var(--angle), transparent 0%, var(--purple-light) 25%, #c084fc 50%, var(--purple-light) 75%, transparent 100%);
+  animation:rotate-conic 3.5s linear infinite;
+  z-index:0;filter:blur(0.5px);
+}
+@property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes rotate-conic{to{--angle:360deg}}
+.hero-cta{
+  position:relative;z-index:1;
+  display:block;width:100%;
+  padding:20px 24px;
+  background:linear-gradient(135deg, #1a0d2e 0%, #2d1850 50%, #1a0d2e 100%);
+  color:#fff;border:none;border-radius:10px;
+  font-family:'Oswald',sans-serif;
+  font-size:0.88rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
+  cursor:pointer;transition:all 0.3s;
+}
+.hero-cta:hover{
+  background:linear-gradient(135deg, #2d1850 0%, #3d2070 50%, #2d1850 100%);
+  transform:translateY(-1px);
+}
+.hero-cta:active{transform:translateY(0) scale(0.99)}
+.hero-cta-meta{
+  margin-top:16px;
+  font-size:0.62rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);
+  animation:fadeUp 0.8s 0.6s cubic-bezier(0.25,0.46,0.45,0.94) both;
+}
+.hero-cta-meta-pulse{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--purple-light);
+  margin-right:8px;
+  animation:pulseDot 1.5s ease-in-out infinite;vertical-align:middle;
+}
+@keyframes pulseDot{
+  0%,100%{opacity:0.4;transform:scale(0.8)}
+  50%{opacity:1;transform:scale(1.2);box-shadow:0 0 12px var(--purple-light)}
+}
+
+@media (max-width:380px){
+  .q-title{font-size:1.45rem}
+  .main{padding:24px 20px 100px}
+  .hero-h1{font-size:1.65rem}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="logo">REVAMPED <span>AGENCIES</span></div>
+    <div class="topbar-right" id="topbar-status">Application</div>
+  </div>
+
+  <div class="main" id="main">
+
+    <!-- HERO -->
+    <section class="hero-screen active" id="screen-hero">
+      <div class="hero-orb"></div>
+      <div class="hero-orb-2"></div>
+      <div class="hero-noise"></div>
+
+      <div class="hero-content">
+        <span class="hero-eyebrow-2">For Licensed Agents</span>
+
+        <h1 class="hero-h1">
+          <span class="hero-h1-line">The agency</span>
+          <span class="hero-h1-line hero-h1-thin">you'd build</span>
+          <span class="hero-h1-line">if you started over.</span>
+        </h1>
+
+        <div class="hero-pillars">
+          <div class="hero-pillar">
+            <div class="hero-pillar-num hero-pillar-num-range">80<span class="hero-pillar-pct">%</span>–100<span class="hero-pillar-pct">%</span></div>
+            <div class="hero-pillar-cap">Starting<br>Contract</div>
+          </div>
+          <div class="hero-pillar-divider"></div>
+          <div class="hero-pillar">
+            <div class="hero-pillar-num">Day 1</div>
+            <div class="hero-pillar-cap">Vested<br>Renewals</div>
+          </div>
+          <div class="hero-pillar-divider"></div>
+          <div class="hero-pillar">
+            <div class="hero-pillar-num">$0</div>
+            <div class="hero-pillar-cap">Fees<br>Ever</div>
+          </div>
+        </div>
+
+        <p class="hero-subline">
+          Inbound leads. Same-week release. No upfront required lead spend.
+        </p>
+
+        <div class="hero-cta-wrap">
+          <div class="hero-cta-border"></div>
+          <button class="hero-cta" onclick="goTo(1)">See If You Qualify</button>
+        </div>
+
+        <div class="hero-cta-meta">
+          <span class="hero-cta-meta-pulse"></span>7 Questions · 3 Minutes
+        </div>
+      </div>
+    </section>
+
+    <!-- Q1: Active writer -->
+    <section class="screen" id="screen-q1">
+      <span class="q-eyebrow">Question 1 of 7</span>
+      <h2 class="q-title">Are you actively writing policies right now?</h2>
+      <div class="options">
+        <button class="opt" onclick="selectRadio(this, 1, 'yes_weekly')"><span class="opt-letter">A</span>Yes, weekly</button>
+        <button class="opt" onclick="selectRadio(this, 1, 'yes_inconsistent')"><span class="opt-letter">B</span>Yes, but not consistently</button>
+        <button class="opt" onclick="selectRadio(this, 1, 'no_inactive')"><span class="opt-letter">C</span>No, I'm licensed but not active</button>
+      </div>
+    </section>
+
+    <!-- Q2: Frustrations -->
+    <section class="screen" id="screen-q2">
+      <span class="q-eyebrow">Question 2 of 7</span>
+      <h2 class="q-title">What's the #1 thing frustrating you right now?</h2>
+      <p class="q-sub">Select all that apply.</p>
+      <div class="options">
+        <button class="opt" onclick="toggleMulti(this, 2, 'low_commission')"><span class="opt-letter">A</span>Commission level is too low</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'lead_costs')"><span class="opt-letter">B</span>Lead costs are eating my income</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'upline_gone')"><span class="opt-letter">C</span>My upline disappeared / no support</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'chargebacks')"><span class="opt-letter">D</span>Chargebacks are killing me</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'must_recruit')"><span class="opt-letter">E</span>I have to recruit to advance</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'limited_carriers')"><span class="opt-letter">F</span>Limited carrier options</button>
+        <button class="opt" onclick="toggleMulti(this, 2, 'captive')"><span class="opt-letter">G</span>I'm captive and want out</button>
+      </div>
+      <button class="btn-primary" id="q2-continue" onclick="advance(2)" disabled>Continue</button>
+    </section>
+
+    <!-- Q3: Commission level -->
+    <section class="screen" id="screen-q3">
+      <span class="q-eyebrow">Question 3 of 7</span>
+      <h2 class="q-title">Which best describes your current commission level?</h2>
+      <div class="options">
+        <button class="opt" onclick="selectRadio(this, 3, 'below_80')"><span class="opt-letter">A</span>Below 80%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '80')"><span class="opt-letter">B</span>80%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '85')"><span class="opt-letter">C</span>85%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '90')"><span class="opt-letter">D</span>90%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '95')"><span class="opt-letter">E</span>95%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '100')"><span class="opt-letter">F</span>100%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '105')"><span class="opt-letter">G</span>105%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '110')"><span class="opt-letter">H</span>110%</button>
+        <button class="opt" onclick="selectRadio(this, 3, '115_plus')"><span class="opt-letter">I</span>115%+</button>
+        <button class="opt" onclick="selectRadio(this, 3, 'dont_know')"><span class="opt-letter">J</span>I honestly don't know — no one's ever shown me my grid</button>
+      </div>
+    </section>
+
+    <!-- Q4: Monthly AP -->
+    <section class="screen" id="screen-q4">
+      <span class="q-eyebrow">Question 4 of 7</span>
+      <h2 class="q-title">What's your monthly written premium?</h2>
+      <div class="options">
+        <button class="opt" onclick="selectRadio(this, 4, 'under_5k')"><span class="opt-letter">A</span>Under $5K AP</button>
+        <button class="opt" onclick="selectRadio(this, 4, '5_15k')"><span class="opt-letter">B</span>$5K–$15K AP</button>
+        <button class="opt" onclick="selectRadio(this, 4, '15_30k')"><span class="opt-letter">C</span>$15K–$30K AP</button>
+        <button class="opt" onclick="selectRadio(this, 4, '30_50k')"><span class="opt-letter">D</span>$30K–$50K AP</button>
+        <button class="opt" onclick="selectRadio(this, 4, '50k_plus')"><span class="opt-letter">E</span>$50K+ AP</button>
+        <button class="opt" onclick="selectRadio(this, 4, 'dont_track')"><span class="opt-letter">F</span>I don't track this</button>
+      </div>
+    </section>
+
+    <!-- Q5: Contract ownership -->
+    <section class="screen" id="screen-q5">
+      <span class="q-eyebrow">Question 5 of 7</span>
+      <h2 class="q-title">Do you own your contracts directly with carriers?</h2>
+      <p class="q-sub">Or does your upline hold them?</p>
+      <div class="options">
+        <button class="opt" onclick="selectRadio(this, 5, 'i_own')"><span class="opt-letter">A</span>I own them directly</button>
+        <button class="opt" onclick="selectRadio(this, 5, 'upline_holds')"><span class="opt-letter">B</span>My upline holds them</button>
+        <button class="opt" onclick="selectRadio(this, 5, 'not_sure')"><span class="opt-letter">C</span>I'm not sure</button>
+      </div>
+    </section>
+
+    <!-- Q6: Timeline -->
+    <section class="screen" id="screen-q6">
+      <span class="q-eyebrow">Question 6 of 7</span>
+      <h2 class="q-title">When are you looking to make a move?</h2>
+      <div class="options">
+        <button class="opt" onclick="selectRadio(this, 6, 'asap')"><span class="opt-letter">A</span>ASAP</button>
+        <button class="opt" onclick="selectRadio(this, 6, '30_days')"><span class="opt-letter">B</span>Within 30 days</button>
+        <button class="opt" onclick="selectRadio(this, 6, '90_days')"><span class="opt-letter">C</span>Within 90 days</button>
+        <button class="opt" onclick="selectRadio(this, 6, 'exploring')"><span class="opt-letter">D</span>Just exploring</button>
+      </div>
+    </section>
+
+    <!-- Q7: Contact + Instagram -->
+    <section class="screen" id="screen-q7">
+      <span class="q-eyebrow">Last step</span>
+      <h2 class="q-title">How should we reach you?</h2>
+      <p class="q-sub">Your recruiter will see this before your call.</p>
+
+      <div class="field-stack">
+        <div class="field-label">Full name</div>
+        <input type="text" class="text-input" id="q7-name" placeholder="Your name" autocomplete="name">
+
+        <div class="field-label">Phone</div>
+        <input type="tel" class="text-input" id="q7-phone" placeholder="(555) 555-5555" autocomplete="tel" inputmode="tel">
+
+        <div class="field-label">Email</div>
+        <input type="email" class="text-input" id="q7-email" placeholder="you@email.com" autocomplete="email" inputmode="email">
+
+        <div class="field-label">Instagram <span style="color:var(--text-muted);font-weight:400">(optional)</span></div>
+        <input type="text" class="text-input" id="q7-ig" placeholder="@yourhandle" autocomplete="off">
+      </div>
+
+      <p class="micro">Helps your recruiter walk into the call already knowing you.</p>
+
+      <div class="error-msg" id="q7-error"></div>
+
+      <button class="btn-primary" id="q7-submit" onclick="submitForm()">Submit</button>
+    </section>
+
+    <!-- SUCCESS -->
+    <section class="screen" id="screen-success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg>
+      </div>
+      <h2 class="success-title">Thank you.<br>You're all set.</h2>
+      <p class="success-sub" id="success-sub"></p>
+    </section>
+
+  </div>
+
+  <div class="stepbar" id="stepbar">
+    <div class="stepbar-inner">
+      <div class="step-text" id="step-label">Step 1 of 7</div>
+      <div class="step-dots" id="step-dots"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_QUESTIONS = 7;
+const EDGE_URL = 'https://hcmtozxbfcrmlicncnhr.supabase.co/functions/v1/recruiting-form';
+
+let currentScreen = 'hero';
+let answers = {};
+let multiSelections = {};
+let isSubmitting = false;
+
+// Read URL params for ref + pre-fill
+const URL_PARAMS = new URLSearchParams(location.search);
+const REF_CODE = URL_PARAMS.get('ref') || null;
+
+function buildDots(){
+  const dotsEl = document.getElementById('step-dots');
+  dotsEl.replaceChildren();
+  for(let i=0;i<TOTAL_QUESTIONS;i++){
+    const d = document.createElement('div');
+    d.className = 'step-dot';
+    dotsEl.appendChild(d);
+  }
+}
+buildDots();
+
+function updateStepbar(qNum){
+  const stepbar = document.getElementById('stepbar');
+  const stepLabel = document.getElementById('step-label');
+  const topbarStatus = document.getElementById('topbar-status');
+
+  if(qNum === 'hero' || qNum === 'success'){
+    stepbar.classList.add('hidden');
+    topbarStatus.textContent = qNum === 'hero' ? 'Application' : 'Confirmed';
+  } else {
+    stepbar.classList.remove('hidden');
+    topbarStatus.textContent = qNum + ' / ' + TOTAL_QUESTIONS;
+    stepLabel.textContent = 'Step ' + qNum + ' of ' + TOTAL_QUESTIONS;
+    const dots = document.querySelectorAll('.step-dot');
+    dots.forEach((d, i) => {
+      d.className = 'step-dot';
+      if(i+1 < qNum) d.classList.add('complete');
+      if(i+1 === qNum) d.classList.add('active');
+    });
+  }
+}
+
+function showScreen(name){
+  document.querySelectorAll('.screen, .hero-screen').forEach(s => s.classList.remove('active'));
+  const next = document.getElementById('screen-' + name);
+  if(next){
+    next.classList.add('active');
+    currentScreen = name;
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+}
+
+function goTo(qNum){
+  let name;
+  if(qNum === 'hero') name = 'hero';
+  else if(qNum === 'success') name = 'success';
+  else name = 'q' + qNum;
+
+  showScreen(name);
+  updateStepbar(qNum);
+
+  if(qNum === 7){
+    // Pre-fill from URL params if available
+    const nameInput = document.getElementById('q7-name');
+    const phoneInput = document.getElementById('q7-phone');
+    const emailInput = document.getElementById('q7-email');
+    if(URL_PARAMS.get('name') && !nameInput.value) nameInput.value = URL_PARAMS.get('name');
+    if(URL_PARAMS.get('phone') && !phoneInput.value) phoneInput.value = URL_PARAMS.get('phone');
+    if(URL_PARAMS.get('email') && !emailInput.value) emailInput.value = URL_PARAMS.get('email');
+
+    setTimeout(() => {
+      // Focus first empty field
+      if(!nameInput.value) nameInput.focus();
+      else if(!phoneInput.value) phoneInput.focus();
+      else if(!emailInput.value) emailInput.focus();
+    }, 200);
+  }
+}
+
+function selectRadio(el, qNum, value){
+  el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers['q' + qNum] = value;
+  setTimeout(() => advance(qNum), 70);
+}
+
+function toggleMulti(el, qNum, value){
+  if(!multiSelections['q' + qNum]) multiSelections['q' + qNum] = [];
+  const arr = multiSelections['q' + qNum];
+  const idx = arr.indexOf(value);
+  if(idx >= 0){
+    arr.splice(idx, 1);
+    el.classList.remove('selected');
+  } else {
+    arr.push(value);
+    el.classList.add('selected');
+  }
+  const continueBtn = document.getElementById('q' + qNum + '-continue');
+  if(continueBtn) continueBtn.disabled = arr.length === 0;
+}
+
+function advance(qNum){
+  if(qNum === TOTAL_QUESTIONS){
+    submitForm();
+  } else {
+    goTo(qNum + 1);
+  }
+}
+
+function showError(msg){
+  const err = document.getElementById('q7-error');
+  err.textContent = msg;
+  err.classList.add('visible');
+}
+function clearError(){
+  document.getElementById('q7-error').classList.remove('visible');
+}
+
+function isValidEmail(s){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+}
+function digitCount(s){
+  return (s.match(/\d/g) || []).length;
+}
+
+async function submitForm(){
+  if(isSubmitting) return;
+
+  const nameVal = document.getElementById('q7-name').value.trim();
+  const phoneVal = document.getElementById('q7-phone').value.trim();
+  const emailVal = document.getElementById('q7-email').value.trim();
+  const igVal = document.getElementById('q7-ig').value.trim().replace(/^@/, '');
+
+  if(!nameVal){ showError('We need your name.'); return; }
+  if(!phoneVal || digitCount(phoneVal) < 10){ showError('Looks like that phone number is missing some digits.'); return; }
+  if(!emailVal || !isValidEmail(emailVal)){ showError('That email doesn\'t look right.'); return; }
+
+  clearError();
+  isSubmitting = true;
+  const submitBtn = document.getElementById('q7-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  const finalAnswers = Object.assign({}, answers, {
+    q2_multi: multiSelections.q2 || []
+  });
+
+  const payload = {
+    form_type: 'licensed',
+    responses: finalAnswers,
+    full_name: nameVal,
+    phone: phoneVal,
+    email: emailVal,
+    ig_username: igVal || null,
+    ref_code: REF_CODE
+  };
+
+  try {
+    const res = await fetch(EDGE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!res.ok || !data.success){
+      throw new Error(data.error || 'Submission failed.');
+    }
+    const subEl = document.getElementById('success-sub');
+    subEl.textContent = data.agent_name
+      ? `${data.agent_name} just got your info and will reach out shortly.`
+      : 'Your recruiter just got your info and will reach out shortly.';
+    goTo('success');
+  } catch (err) {
+    isSubmitting = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Try again';
+    showError('Something went wrong. ' + (err.message || 'Please try again.'));
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){
+    if(currentScreen === 'q7'){
+      submitForm();
+    } else if(currentScreen === 'hero'){
+      goTo(1);
+    }
+  }
+});
+
+updateStepbar('hero');
+</script>
+</body>
+</html>
