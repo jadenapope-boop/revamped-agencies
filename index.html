@@ -224,6 +224,17 @@ section{position:relative;z-index:2}
 .apply-submit::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left 0.5s}
 .apply-submit:hover{box-shadow:0 8px 40px rgba(124,58,237,0.5);transform:translateY(-2px)}
 .apply-submit:hover::after{left:100%}
+.apply-choices{display:flex;flex-direction:column;gap:14px;text-align:left;margin-top:8px}
+.apply-choice{display:flex;align-items:center;gap:18px;padding:24px 26px;background:var(--bg-card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1.5px solid var(--border);text-decoration:none;color:var(--text);transition:all 0.25s cubic-bezier(0.2,0.8,0.2,1);cursor:pointer;position:relative;overflow:hidden}
+.apply-choice::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,0.08),transparent 60%);opacity:0;transition:opacity 0.3s;pointer-events:none}
+.apply-choice:hover{border-color:var(--purple-light);transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,0.25)}
+.apply-choice:hover::before{opacity:1}
+.apply-choice-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:700;font-size:15px;color:#fff;flex-shrink:0;box-shadow:0 4px 14px rgba(124,58,237,0.45);position:relative;z-index:1}
+.apply-choice-body{flex:1;min-width:0;position:relative;z-index:1}
+.apply-choice-title{font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px;color:var(--text)}
+.apply-choice-desc{font-size:0.8rem;color:var(--text-dim);line-height:1.4}
+.apply-choice-arrow{color:var(--text-muted);transition:transform 0.25s,color 0.25s;flex-shrink:0;position:relative;z-index:1}
+.apply-choice:hover .apply-choice-arrow{color:var(--purple-light);transform:translateX(4px)}
 
 /* ═══ FOOTER ═══ */
 footer{background:#040408;border-top:1px solid var(--border);padding:70px 60px 36px;position:relative;z-index:5}
@@ -567,15 +578,24 @@ footer ul a:hover{color:var(--purple-light)}
   <div class="apply-inner reveal">
     <h2>Ready to Get <span>Revamped</span>?</h2>
     <p>No experience required. No degree needed. Just ambition, coachability, and the drive to build something real.</p>
-    <form class="apply-form" id="applyForm">
-      <input type="hidden" name="ref_code" id="refCodeInput"/>
-      <input type="text" name="full_name" placeholder="Full Name" required/>
-      <input type="tel" name="phone" placeholder="Phone Number" required/>
-      <input type="email" name="email" placeholder="Email Address" required/>
-      <textarea name="motivation" placeholder="Why do you want to sell insurance? (Be honest)"></textarea>
-      <button type="submit" class="apply-submit" id="applyBtn">Apply Now</button>
-      <div id="applyStatus" style="display:none;text-align:center;margin-top:16px;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase"></div>
-    </form>
+    <div class="apply-choices">
+      <a class="apply-choice" id="choiceLicensed" href="/career/licensed">
+        <div class="apply-choice-icon">A</div>
+        <div class="apply-choice-body">
+          <div class="apply-choice-title">I'm Licensed</div>
+          <div class="apply-choice-desc">Active or inactive — you've got the credential.</div>
+        </div>
+        <svg class="apply-choice-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a class="apply-choice" id="choiceNew" href="/career/new">
+        <div class="apply-choice-icon">B</div>
+        <div class="apply-choice-body">
+          <div class="apply-choice-title">Not Yet — Get Me Licensed</div>
+          <div class="apply-choice-desc">No experience needed. We'll handle the license, training, and warm leads.</div>
+        </div>
+        <svg class="apply-choice-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -927,15 +947,11 @@ revBtn.addEventListener('click', function() {
   };
 })(document, 'script');
 
-// ═══ REFERRAL LINK + FORM SUBMISSION ═══
-var EDGE_URL = 'https://hcmtozxbfcrmlicncnhr.supabase.co/functions/v1/website-form';
-
-// Read ?ref= from URL and store it
+// ═══ REFERRAL LINK + CHOICE BUTTONS ═══
+// Read ?ref= from URL and propagate it through to the funnel pages
 var urlParams = new URLSearchParams(window.location.search);
 var refCode = urlParams.get('ref');
 if (refCode) {
-  document.getElementById('refCodeInput').value = refCode;
-  // Store in sessionStorage so it persists across page interactions
   sessionStorage.setItem('revamped_ref', refCode);
   // Track page view for this ref code (fire-and-forget, once per session)
   if (!sessionStorage.getItem('revamped_viewed')) {
@@ -951,68 +967,17 @@ if (refCode) {
     }).catch(function() {});
   }
 } else {
-  var stored = sessionStorage.getItem('revamped_ref');
-  if (stored) {
-    refCode = stored;
-    document.getElementById('refCodeInput').value = stored;
-  }
+  refCode = sessionStorage.getItem('revamped_ref');
 }
 
-// Form submission
-document.getElementById('applyForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  var btn = document.getElementById('applyBtn');
-  var status = document.getElementById('applyStatus');
-  var form = this;
-
-  btn.disabled = true;
-  btn.textContent = 'SUBMITTING...';
-  status.style.display = 'none';
-
-  var data = {
-    full_name: form.full_name.value.trim(),
-    phone: form.phone.value.trim(),
-    email: form.email.value.trim(),
-    motivation: form.motivation.value.trim(),
-    ref_code: form.ref_code.value || null,
-  };
-
-  try {
-    var res = await fetch(EDGE_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    var result = await res.json();
-
-    if (result.success) {
-      btn.textContent = 'SUBMITTED';
-      btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
-      var msg = result.agent_name
-        ? result.agent_name + ' has been notified and will reach out soon!'
-        : 'Application received! Someone from the team will be in touch.';
-      status.textContent = msg;
-      status.style.color = '#22c55e';
-      status.style.display = 'block';
-
-      // If agent has a calendar URL, redirect after 2 seconds
-      if (result.calendar_url) {
-        status.textContent = msg + ' Redirecting to book a call...';
-        setTimeout(function() { window.open(result.calendar_url, '_blank'); }, 2000);
-      }
-    } else {
-      throw new Error(result.error || 'Submission failed');
-    }
-  } catch (err) {
-    btn.textContent = 'TRY AGAIN';
-    btn.disabled = false;
-    btn.style.background = '';
-    status.textContent = 'Something went wrong. Please try again.';
-    status.style.color = '#ef4444';
-    status.style.display = 'block';
-    console.error('[Form]', err);
-  }
-});
+// Append ref code to choice button URLs so the funnel pages keep attribution
+if (refCode) {
+  var refQS = '?ref=' + encodeURIComponent(refCode);
+  var licensedBtn = document.getElementById('choiceLicensed');
+  var newBtn = document.getElementById('choiceNew');
+  if (licensedBtn) licensedBtn.href = '/career/licensed' + refQS;
+  if (newBtn) newBtn.href = '/career/new' + refQS;
+}
 </script>
 </body>
 </html>
