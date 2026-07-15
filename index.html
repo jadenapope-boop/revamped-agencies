@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <title>Revamped Agencies | The Future of Insurance</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -215,6 +216,15 @@ section{position:relative;z-index:2}
 .apply h2{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
 .apply h2 span{background:linear-gradient(135deg,var(--purple-light),#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 .apply-inner>p{font-size:0.88rem;line-height:1.85;color:var(--text-dim);margin-bottom:36px;max-width:400px;margin-left:auto;margin-right:auto}
+.overview-video{margin:0 auto 32px;text-align:left}
+.video-label{font-size:0.62rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--purple-light);margin-bottom:12px;text-align:center}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:rgba(255,255,255,0.04);border:1px solid rgba(168,85,247,0.25);box-shadow:0 18px 48px rgba(0,0,0,0.28)}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-link{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;text-decoration:none}
+.video-link img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.72;transform:scale(1.02)}
+.video-link::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,10,0.08),rgba(6,6,10,0.62))}
+.play-button{position:relative;z-index:1;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(168,85,247,0.92);box-shadow:0 12px 32px rgba(124,58,237,0.42);font-size:20px;padding-left:4px}
+.video-copy{position:absolute;z-index:1;left:18px;right:18px;bottom:16px;font-size:0.74rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.9);text-align:center}
 .apply-form{display:flex;flex-direction:column;gap:14px;text-align:left}
 .apply-form input,.apply-form textarea{padding:16px 20px;background:var(--bg-card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--border);color:var(--text);font-size:0.88rem;font-family:'Montserrat',sans-serif;outline:none;transition:all 0.3s}
 .apply-form input:focus,.apply-form textarea:focus{border-color:var(--purple-light);box-shadow:0 0 20px rgba(124,58,237,0.15)}
@@ -298,6 +308,8 @@ footer ul a:hover{color:var(--purple-light)}
   .culture-num{font-size:2.8rem}
   .apply h2{font-size:clamp(1.6rem,5vw,2.2rem)}
   .apply-inner>p{font-size:0.85rem}
+  .overview-video{margin-bottom:28px}
+  .video-copy{font-size:0.62rem;letter-spacing:1.2px}
   .apply-form input,.apply-form textarea{padding:14px 16px;font-size:0.82rem}
   .apply-submit{padding:16px;font-size:0.7rem;letter-spacing:3px}
   footer{padding:50px 20px 28px}
@@ -578,6 +590,16 @@ footer ul a:hover{color:var(--purple-light)}
   <div class="apply-inner reveal">
     <h2>Ready to Get <span>Revamped</span>?</h2>
     <p>No experience required. No degree needed. Just ambition, coachability, and the drive to build something real.</p>
+    <div class="overview-video" aria-label="Family First Life company overview video">
+      <div class="video-label">Company Overview</div>
+      <div class="video-frame" id="home-company-video">
+        <a class="video-link" href="https://www.youtube.com/watch?v=PFufqDZLhYU" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.ytimg.com/vi/PFufqDZLhYU/hqdefault.jpg" alt="Family First Life company overview video thumbnail">
+          <span class="play-button" aria-hidden="true">▶</span>
+          <span class="video-copy">Watch Family First Life overview</span>
+        </a>
+      </div>
+    </div>
     <div class="apply-choices">
       <a class="apply-choice" id="choiceLicensed" href="/career/licensed">
         <div class="apply-choice-icon">A</div>
@@ -977,6 +999,20 @@ if (refCode) {
   var newBtn = document.getElementById('choiceNew');
   if (licensedBtn) licensedBtn.href = '/career/licensed' + refQS;
   if (newBtn) newBtn.href = '/career/new' + refQS;
+}
+
+// YouTube blocks some file:// embeds with Error 153 because there is no HTTP referrer.
+// Keep local previews clean; use the iframe only when served over http(s).
+var homeVideoMount = document.getElementById('home-company-video');
+if (homeVideoMount && window.location.protocol !== 'file:') {
+  var companyIframe = document.createElement('iframe');
+  companyIframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0';
+  companyIframe.title = 'Family First Life: Company Overview';
+  companyIframe.loading = 'lazy';
+  companyIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  companyIframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  companyIframe.allowFullscreen = true;
+  homeVideoMount.replaceChildren(companyIframe);
 }
 </script>
 </body>

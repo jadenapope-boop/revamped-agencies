@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Revamped Agencies — Career</title>
 <meta name="description" content="Start your career with Revamped Agencies. Choose your path: licensed agent or new to insurance.">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -92,7 +93,84 @@ body{
 
 .sub{
   font-size:0.95rem;line-height:1.6;color:var(--text-dim);
-  margin-bottom:48px;
+  margin-bottom:28px;
+}
+
+.overview-video{
+  margin-bottom:36px;
+}
+.video-label{
+  font-size:0.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--purple-light);
+  margin-bottom:12px;
+}
+.video-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(168,85,247,0.25);
+  box-shadow:0 18px 48px rgba(0,0,0,0.28);
+}
+.video-frame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+.video-link{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:#fff;
+  text-decoration:none;
+}
+.video-link img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0.72;
+  transform:scale(1.02);
+}
+.video-link::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(6,6,10,0.08), rgba(6,6,10,0.62));
+}
+.play-button{
+  position:relative;
+  z-index:1;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(168,85,247,0.92);
+  box-shadow:0 12px 32px rgba(124,58,237,0.42);
+  font-size:20px;
+  padding-left:4px;
+}
+.video-copy{
+  position:absolute;
+  z-index:1;
+  left:18px;
+  right:18px;
+  bottom:16px;
+  font-size:0.74rem;
+  font-weight:700;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.9);
 }
 
 .q-label{
@@ -185,6 +263,17 @@ body{
       <h1 class="h1">Quick question<br><span class="h1-accent">before we start.</span></h1>
       <p class="sub">Two paths. Same destination. Pick the one that fits where you are right now.</p>
 
+      <div class="overview-video" aria-label="Family First Life company overview video">
+        <div class="video-label">Company Overview</div>
+        <div class="video-frame" id="company-video">
+          <a class="video-link" href="https://www.youtube.com/watch?v=PFufqDZLhYU" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/PFufqDZLhYU/hqdefault.jpg" alt="Family First Life company overview video thumbnail">
+            <span class="play-button" aria-hidden="true">▶</span>
+            <span class="video-copy">Watch Family First Life overview</span>
+          </a>
+        </div>
+      </div>
+
       <div class="q-label">Are you licensed?</div>
 
       <a class="choice" id="choice-licensed">
@@ -220,6 +309,20 @@ const ref = params.get('ref');
 const qs = ref ? ('?ref=' + encodeURIComponent(ref)) : '';
 document.getElementById('choice-licensed').href = 'licensed' + qs;
 document.getElementById('choice-new').href = 'new' + qs;
+
+// YouTube blocks some file:// embeds with Error 153 because there is no HTTP referrer.
+// Keep local previews clean; use the iframe only when served over http(s).
+const videoMount = document.getElementById('company-video');
+if (videoMount && location.protocol !== 'file:') {
+  const iframe = document.createElement('iframe');
+  iframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0';
+  iframe.title = 'Family First Life: Company Overview';
+  iframe.loading = 'lazy';
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+  iframe.allowFullscreen = true;
+  videoMount.replaceChildren(iframe);
+}
 </script>
 </body>
 </html>
