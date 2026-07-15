@@ -311,17 +311,21 @@ document.getElementById('choice-licensed').href = 'licensed' + qs;
 document.getElementById('choice-new').href = 'new' + qs;
 
 // YouTube blocks some file:// embeds with Error 153 because there is no HTTP referrer.
-// Keep local previews clean; use the iframe only when served over http(s).
+// Keep the thumbnail visible first; load the iframe only after the user taps play.
 const videoMount = document.getElementById('company-video');
-if (videoMount && location.protocol !== 'file:') {
-  const iframe = document.createElement('iframe');
-  iframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0';
-  iframe.title = 'Family First Life: Company Overview';
-  iframe.loading = 'lazy';
-  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-  iframe.allowFullscreen = true;
-  videoMount.replaceChildren(iframe);
+const videoLink = videoMount?.querySelector('.video-link');
+if (videoMount && videoLink && location.protocol !== 'file:') {
+  videoLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0&autoplay=1';
+    iframe.title = 'Family First Life: Company Overview';
+    iframe.loading = 'lazy';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    videoMount.replaceChildren(iframe);
+  });
 }
 </script>
 </body>

@@ -1002,17 +1002,21 @@ if (refCode) {
 }
 
 // YouTube blocks some file:// embeds with Error 153 because there is no HTTP referrer.
-// Keep local previews clean; use the iframe only when served over http(s).
+// Keep the thumbnail visible first; load the iframe only after the user taps play.
 var homeVideoMount = document.getElementById('home-company-video');
-if (homeVideoMount && window.location.protocol !== 'file:') {
-  var companyIframe = document.createElement('iframe');
-  companyIframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0';
-  companyIframe.title = 'Family First Life: Company Overview';
-  companyIframe.loading = 'lazy';
-  companyIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-  companyIframe.referrerPolicy = 'strict-origin-when-cross-origin';
-  companyIframe.allowFullscreen = true;
-  homeVideoMount.replaceChildren(companyIframe);
+var homeVideoLink = homeVideoMount ? homeVideoMount.querySelector('.video-link') : null;
+if (homeVideoMount && homeVideoLink && window.location.protocol !== 'file:') {
+  homeVideoLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    var companyIframe = document.createElement('iframe');
+    companyIframe.src = 'https://www.youtube.com/embed/PFufqDZLhYU?rel=0&autoplay=1';
+    companyIframe.title = 'Family First Life: Company Overview';
+    companyIframe.loading = 'lazy';
+    companyIframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    companyIframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    companyIframe.allowFullscreen = true;
+    homeVideoMount.replaceChildren(companyIframe);
+  });
 }
 </script>
 </body>
