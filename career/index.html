@@ -308,6 +308,9 @@ const params = new URLSearchParams(location.search);
 const ref = params.get('ref');
 const qs = ref ? ('?ref=' + encodeURIComponent(ref)) : '';
 document.getElementById('choice-licensed').href = 'licensed' + qs;
+// Bot-sent links carry ?track=licensed|new — skip the choice screen.
+const track = params.get('track');
+if (track === 'licensed' || track === 'new') location.replace(track + location.search); // keep phone/booking_id/etc.
 document.getElementById('choice-new').href = 'new' + qs;
 
 // YouTube blocks some file:// embeds with Error 153 because there is no HTTP referrer.

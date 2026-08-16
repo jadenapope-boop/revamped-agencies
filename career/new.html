@@ -753,7 +753,8 @@ async function submitForm(){
     phone: phoneVal,
     email: emailVal,
     ig_username: igVal || null,
-    ref_code: REF_CODE
+    ref_code: REF_CODE,
+    booking_id: URL_PARAMS.get('booking_id') || null
   };
 
   try {
