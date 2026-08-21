@@ -13,6 +13,7 @@ html,body{overscroll-behavior:none;background:#06060a;color:rgba(255,255,255,0.9
 :root{
   --purple:#7c3aed;--purple-light:#a855f7;--purple-dark:#6d28d9;--purple-glow:rgba(168,85,247,0.5);
   --accent-rgb:168,85,247;--accent-deep-rgb:124,58,237;--accent-mid-rgb:147,51,234;--accent-bright:#c084fc;
+  --cta-deep:#1a0d2e;--cta-mid:#2d1850;--cta-hi:#3d2070;
   --bg:#06060a;--bg-card:rgba(255,255,255,0.03);
   --border:rgba(var(--accent-mid-rgb),0.18);--border-strong:rgba(var(--accent-rgb),0.4);
   --text:rgba(255,255,255,0.92);--text-dim:rgba(255,255,255,0.55);--text-muted:rgba(255,255,255,0.32);
@@ -357,14 +358,14 @@ body{
   position:relative;z-index:1;
   display:block;width:100%;
   padding:20px 24px;
-  background:linear-gradient(135deg, #1a0d2e 0%, #2d1850 50%, #1a0d2e 100%);
+  background:linear-gradient(135deg, var(--cta-deep) 0%, var(--cta-mid) 50%, var(--cta-deep) 100%);
   color:#fff;border:none;border-radius:10px;
   font-family:'Oswald',sans-serif;
   font-size:0.88rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
   cursor:pointer;transition:all 0.3s;
 }
 .hero-cta:hover{
-  background:linear-gradient(135deg, #2d1850 0%, #3d2070 50%, #2d1850 100%);
+  background:linear-gradient(135deg, var(--cta-mid) 0%, var(--cta-hi) 50%, var(--cta-mid) 100%);
   transform:translateY(-1px);
 }
 .hero-cta:active{transform:translateY(0) scale(0.99)}
@@ -391,7 +392,7 @@ body{
   .hero-h1{font-size:1.65rem}
 }
 </style>
-<script src="/career/brands.js?v=2"></script>
+<script src="/career/brands.js?v=3"></script>
 </head>
 <body>
 <div class="app">

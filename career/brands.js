@@ -39,7 +39,10 @@
         '--accent-rgb': '77,155,255',
         '--accent-deep-rgb': '36,97,216',
         '--accent-mid-rgb': '59,130,246',
-        '--accent-bright': '#7cc0ff'
+        '--accent-bright': '#7cc0ff',
+        '--cta-deep': '#0d1a2e',
+        '--cta-mid': '#16294d',
+        '--cta-hi': '#1e3a6b'
       }
     }
   };
