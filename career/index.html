@@ -305,10 +305,12 @@ body{
 </div>
 
 <script>
-// Pass any ?ref= param through to the chosen funnel
+// Pass the WHOLE querystring through to the chosen funnel — not just ref.
+// A bot link that lands here (missing track, or back-navigation) must keep
+// phone/name/email/booking_id, or the submission orphans into a duplicate
+// pipeline row (2026-08: 15 orphans because a stale deploy dropped these).
 const params = new URLSearchParams(location.search);
-const ref = params.get('ref');
-const qs = ref ? ('?ref=' + encodeURIComponent(ref)) : '';
+const qs = location.search;
 document.getElementById('choice-licensed').href = 'licensed' + qs;
 // Bot-sent links carry ?track=licensed|new — skip the choice screen.
 const track = params.get('track');
