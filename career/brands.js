@@ -35,7 +35,11 @@
         '--purple-dark': '#1a4fb8',
         '--purple-glow': 'rgba(77,155,255,0.5)',
         '--border': 'rgba(59,130,246,0.18)',
-        '--border-strong': 'rgba(77,155,255,0.4)'
+        '--border-strong': 'rgba(77,155,255,0.4)',
+        '--accent-rgb': '77,155,255',
+        '--accent-deep-rgb': '36,97,216',
+        '--accent-mid-rgb': '59,130,246',
+        '--accent-bright': '#7cc0ff'
       }
     }
   };
