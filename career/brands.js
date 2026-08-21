@@ -28,7 +28,7 @@
         new: 'No experience needed. Get licensed, trained, and handed warm leads. Start your 90-day road to financial freedom with Based Financial.',
         licensed: 'Licensed life insurance agent? Apply to join Based Financial. 80-100% starting contracts, vested renewals Day 1, no fees.'
       },
-      hosts: [], // Jeremi's domain goes here once DNS is pointed
+      hosts: ['joinbased.org'], // www is stripped before matching
       vars: {
         '--purple': '#2361d8',
         '--purple-light': '#4d9bff',
